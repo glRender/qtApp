@@ -6,36 +6,41 @@ find_package (Qt5Widgets)
 find_package (Qt5OpenGL)
 
 if(WIN32)
-        set(GLEW_LIBRARY ${CMAKE_CURRENT_SOURCE_DIR}/libs/glew/lib/glew32.dll )
-        set(GLEW_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/libs/glew/include )
+    set(GLEW_LIBRARY ${CMAKE_CURRENT_SOURCE_DIR}/libs/glew/lib/glew32.dll )
+    set(GLEW_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/libs/glew/include )
 endif()
 
 find_package(GLEW REQUIRED)
 
 set (SRC src)
-set (INCLUDE include)
 
-set (glRenderQtWidget_src ${SRC}/glRenderQtWidget.cpp)
-set (glRenderQtWidget_hdr ${INCLUDE}/glRenderQtWidget.h)
+set (lib_src ${SRC}/glRenderQtWidget.cpp
+             ${SRC}/mainwindow.cpp)
 
-qt5_wrap_cpp(glRenderQtWidget_hdr_moc ${glRenderQtWidget_hdr})
+set (lib_hdr ${SRC}/glRenderQtWidget.h
+             ${SRC}/mainwindow.h)
 
-include_directories (${PROJECT_SOURCE_DIR})
-include_directories (${PROJECT_BINARY_DIR})
+set (lib_ui  ${SRC}/mainwindow.ui)
 
-include_directories(
+set (bin_src ${SRC}/main.cpp)
+
+qt5_wrap_cpp(lib_hdr_moc ${lib_hdr})
+qt5_wrap_ui (lib_ui_moc  ${lib_ui})
+
+include_directories (
+        ${SRC}
+        ${PROJECT_BINARY_DIR}/app
         ${PROJECT_BINARY_DIR}/libs/glRender/include
-        ${GLEW_INCLUDE_DIRS}
-)
+        ${GLEW_INCLUDE_DIRS})
 
-if(WIN32)
-    file(COPY libs/glew/lib/glew32.dll DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
-endif()
+add_library (Lib SHARED 
+    ${lib_src}
+    ${lib_hdr_moc}
+    ${lib_ui_moc})
 
-add_library (glRenderQtWidget SHARED ${glRenderQtWidget_src} ${glRenderQtWidget_hdr_moc}
-            )
-target_link_libraries (glRenderQtWidget Qt5::Widgets Qt5::OpenGL ${GLEW_LIBRARIES} ${PROJECT_BINARY_DIR}/libs/glRender/libglRender.so)
+target_link_libraries (Lib Qt5::Widgets Qt5::OpenGL ${GLEW_LIBRARIES} ${PROJECT_BINARY_DIR}/libs/glRender/libglRender.so)
 
-target_include_directories(glRenderQtWidget PUBLIC include)
+add_executable(App ${bin_src})
+target_link_libraries (App Lib)
 
-file(COPY include DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+file(COPY data DESTINATION ${CMAKE_CURRENT_BINARY_DIR})

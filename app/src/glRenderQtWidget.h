@@ -41,14 +41,14 @@ public:
 
     void update() override
     {
-        camera()->translate(0.0, 0.0, 0.5);
-
-        Vec3 p = camera()->position();
-
-        camera()->translate(-p);
-        camera()->rotate( -7, Vec3::AXE_Y() );
-        camera()->rotate( -7, Vec3::AXE_Z() );
-        camera()->translate(p);
+//        camera()->translate(0.0, 0.0, 0.5);
+//
+//        Vec3 p = camera()->position();
+//
+//        camera()->translate(-p);
+//        camera()->rotate( -7, Vec3::AXE_Y() );
+//        camera()->rotate( -7, Vec3::AXE_Z() );
+//        camera()->translate(p);
     }
 
 };

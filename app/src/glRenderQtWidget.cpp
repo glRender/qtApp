@@ -22,6 +22,14 @@ void glRenderQtWidget::initializeGL()
         exit(-1);
     }
 
+    // print context information
+    printf ("**************************\n");
+    printf ("Vendor: %s\n", glGetString (GL_VENDOR));
+    printf ("Renderer: %s\n", glGetString (GL_RENDERER));
+    printf ("Version: %s\n", glGetString (GL_VERSION));
+    printf ("GLSL: %s\n", glGetString (GL_SHADING_LANGUAGE_VERSION));
+    printf ("**************************\n");
+    
     glClearColor ( 0.5, 0.5, 0.5, 1.0111 );
     glEnable     ( GL_DEPTH_TEST );
     glDepthFunc  ( GL_LEQUAL );
