@@ -1,0 +1,4 @@
+[submodule "libs/glRender"]
+	path = libs/glRender
+	url = https://github.com/sogimu/glRenderCMake
+	branch = master
