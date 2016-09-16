@@ -31,6 +31,8 @@ public:
     MyCamera(Camera * camera) :
         NodeCamera(camera)
     {
+        camera->rotate(180, Vec3::AXE_Y());
+        camera->translate(50*Vec3::AXE_Z());
 
     }
 
@@ -42,11 +44,11 @@ public:
     void update() override
     {
 //        camera()->translate(0.0, 0.0, 0.5);
-//
+
 //        Vec3 p = camera()->position();
 //
 //        camera()->translate(-p);
-//        camera()->rotate( -7, Vec3::AXE_Y() );
+        camera()->rotate( -0.1, Vec3::AXE_Y() );
 //        camera()->rotate( -7, Vec3::AXE_Z() );
 //        camera()->translate(p);
     }

@@ -9,41 +9,42 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    float cameraSpeed = 0.1f;
+    float cameraMoveSpeed = 0.7f;
+    float cameraRotationSpeed = 10.0f;
 
-    connect(ui->actionMoveLeft, &QAction::triggered, this, [this, cameraSpeed]() {
-        ui->glWidget->camera->translate( cameraSpeed * -Vec3::AXE_X() );
+    connect(ui->actionMoveLeft, &QAction::triggered, this, [this, cameraMoveSpeed]() {
+        ui->glWidget->camera->translate( cameraMoveSpeed * -Vec3::AXE_X() );
         qDebug() << "a";
         ui->glWidget->update();
         qDebug() << "A clicked";
     });
 
-    connect(ui->actionMoveRight, &QAction::triggered, this, [this, cameraSpeed]() {
-        ui->glWidget->camera->translate( cameraSpeed * Vec3::AXE_X() );
+    connect(ui->actionMoveRight, &QAction::triggered, this, [this, cameraMoveSpeed]() {
+        ui->glWidget->camera->translate( cameraMoveSpeed * Vec3::AXE_X() );
         qDebug() << "D clicked";
         ui->glWidget->update();
     });
 
-    connect(ui->actionMoveForward, &QAction::triggered, this, [this, cameraSpeed]() {
-        ui->glWidget->camera->translate( cameraSpeed * Vec3::AXE_Z() );
+    connect(ui->actionMoveForward, &QAction::triggered, this, [this, cameraMoveSpeed]() {
+        ui->glWidget->camera->translate( cameraMoveSpeed * Vec3::AXE_Z() );
         qDebug() << "W clicked";
         ui->glWidget->update();
     });
 
-    connect(ui->actionMoveBack, &QAction::triggered, this, [this, cameraSpeed]() {
-        ui->glWidget->camera->translate( cameraSpeed * -Vec3::AXE_Z() );
+    connect(ui->actionMoveBack, &QAction::triggered, this, [this, cameraMoveSpeed]() {
+        ui->glWidget->camera->translate( cameraMoveSpeed * -Vec3::AXE_Z() );
         qDebug() << "S clicked";
         ui->glWidget->update();
     });
 
-    connect(ui->actionRotate_left, &QAction::triggered, this, [this, cameraSpeed]() {
-        ui->glWidget->camera->rotate( 5, Vec3::AXE_Y() );
+    connect(ui->actionRotate_left, &QAction::triggered, this, [this, cameraRotationSpeed ]() {
+        ui->glWidget->camera->rotate( cameraRotationSpeed, Vec3::AXE_Y() );
         qDebug() << "Rotate left";
         ui->glWidget->update();
     });
 
-    connect(ui->actionRotate_right, &QAction::triggered, this, [this, cameraSpeed]() {
-        ui->glWidget->camera->rotate( -5, Vec3::AXE_Y() );
+    connect(ui->actionRotate_right, &QAction::triggered, this, [this, cameraRotationSpeed ]() {
+        ui->glWidget->camera->rotate( -cameraRotationSpeed, Vec3::AXE_Y() );
         qDebug() << "Rotate right";
         ui->glWidget->update();
     });

@@ -1,8 +1,11 @@
 #include "glRenderQtWidget.h"
 
+#include <QDebug>
+
 glRenderQtWidget::glRenderQtWidget(QWidget *parent) :
     QGLWidget(parent)
 {
+
 }
 
 void glRenderQtWidget::initializeGL()
@@ -29,12 +32,14 @@ void glRenderQtWidget::initializeGL()
     printf ("Version: %s\n", glGetString (GL_VERSION));
     printf ("GLSL: %s\n", glGetString (GL_SHADING_LANGUAGE_VERSION));
     printf ("**************************\n");
-    
+
     glClearColor ( 0.5, 0.5, 0.5, 1.0111 );
     glEnable     ( GL_DEPTH_TEST );
     glDepthFunc  ( GL_LEQUAL );
 
-    camera = new glRender::PerspectiveCamera( 50.0 / 180.0 * MATH_PI, (float)width() / (float)height(), 0.1f, 200.0f );
+    camera = new glRender::PerspectiveCamera( 50.0 / 180.0 * MATH_PI, 1.0, 0.1f, 200.0f );
+//    camera->rotate(180, Vec3::AXE_Y());
+//    camera->translate(50*Vec3::AXE_Z());
 
     scene = new glRender::Scene();
     scene->setActiveCamera(camera);
@@ -55,32 +60,38 @@ void glRenderQtWidget::initializeGL()
     model0 = new Model(geometry0, textures0, shaderProgram0);
     model0->setWireframeMode(false);
     model0->setPosition(0.0, 0.0, 0.0);
-    std::cout << "model0->position " << model0->position() << std::endl;
 
     MyModel * n0 = new MyModel(model0);
     scene->addNode(n0);
 
     srand( time(0) );
 
-    for (int i=0; i<5000; i++)
+    for (int i=0; i<10; i++)
     {
-        model1 = new Model(GeometryHelper::Cube( (rand() % 10) / 10.0), textures0, shaderProgram0);
-        model1->setWireframeMode(false);
-        model1->setPosition( (-5.0 + rand() % 50), (-5.0 + rand() % 50), (-5.0 + rand() % 50) );
+        for (int j=0; j<10; j++)
+        {
+            for (int k=0; k<10; k++)
+            {
+                model1 = new Model(GeometryHelper::Cube(1.0), textures0, shaderProgram0);
+                model1->setWireframeMode(false);
+                model1->setPosition( ((rand() % 50)) - 25, ((rand() % 50)) - 25, ((rand() % 50) - 25) );
 
-        MyModel * n = new MyModel(model1);
-        scene->addNode(n);
+                MyModel *n = new MyModel(model1);
+                scene->addNode(n);
+            }
+        }
     }
 
-    m_drawUpdater.setInterval(16);
-    connect(&m_drawUpdater, &QTimer::timeout, this, [&]() {
-        this->update();
-    });
-    m_drawUpdater.start();
+//    m_drawUpdater.setInterval(16);
+//    connect(&m_drawUpdater, &QTimer::timeout, this, [&]() {
+//        this->update();
+//    });
+//    m_drawUpdater.start();
 
-    m_logicUpdater.setInterval(8);
+    m_logicUpdater.setInterval(16);
     connect(&m_logicUpdater, &QTimer::timeout, this, [&]() {
         scene->update();
+        this->update();
     });
     m_logicUpdater.start();
 
@@ -88,7 +99,28 @@ void glRenderQtWidget::initializeGL()
 
 void glRenderQtWidget::resizeGL(int w, int h)
 {
-    glViewport ( 0, 0, (GLsizei)w, (GLsizei)h );
+    int minSide = qMin(w, h);
+    int x;
+    int y;
+
+    if (w > h)
+    {
+        x = w / 2 - minSide / 2;
+        y = 0;
+    } else
+    if (w < h)
+    {
+        x = 0;
+        y = h / 2 - minSide / 2;
+
+    }
+    if (w == h)
+    {
+        x = 0;
+        y = 0;
+    }
+
+        glViewport ( x, y, (GLsizei)minSide, (GLsizei)minSide );
 }
 
 void glRenderQtWidget::paintGL()
