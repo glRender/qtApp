@@ -109,13 +109,13 @@ MainWindow::MainWindow(QWidget *parent) :
     });
 
     connect(ui->glWidget, &glRenderQtWidget::cameraTargetChanged, this, [this](Vec3 target) {
-//        ui->targetX->setText(QString::number(ui->glWidget->camera->target().x));
-//        ui->targetY->setText(QString::number(ui->glWidget->camera->target().y));
-//        ui->targetZ->setText(QString::number(ui->glWidget->camera->target().z));
+        ui->targetX->setText(QString::number(ui->glWidget->camera->target().x));
+        ui->targetY->setText(QString::number(ui->glWidget->camera->target().y));
+        ui->targetZ->setText(QString::number(ui->glWidget->camera->target().z));
     });
 
     connect(ui->glWidget, &glRenderQtWidget::mousePositionChanged, this, [this](Vec2 position) {
-//        qDebug() << position.toStdString();
+        qDebug() << position.toStdString();
     });
 
     addAction(ui->actionMoveBack);

@@ -171,8 +171,8 @@ void glRenderQtWidget::initializeGL()
     m_logicUpdater.setInterval(1);
     connect(&m_logicUpdater, &QTimer::timeout, this, [&]() {
         scene->update();
-//        emit cameraPositionChanged( camera->position() );
-//        emit cameraTargetChanged( camera->target() );
+        emit cameraPositionChanged( camera->position() );
+        emit cameraTargetChanged( camera->target() );
 
     });
     m_logicUpdater.start();
