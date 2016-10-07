@@ -12,41 +12,58 @@ MainWindow::MainWindow(QWidget *parent) :
     float cameraMoveSpeed = 0.7f;
     float cameraRotationSpeed = 10.0f;
 
-    connect(ui->actionMoveLeft, &QAction::triggered, this, [this, cameraMoveSpeed]() {
-        ui->glWidget->camera->translate( cameraMoveSpeed * -Vec3::AXE_X() );
-        qDebug() << "a";
-        ui->glWidget->update();
-        qDebug() << "A clicked";
-    });
-
-    connect(ui->actionMoveRight, &QAction::triggered, this, [this, cameraMoveSpeed]() {
-        ui->glWidget->camera->translate( cameraMoveSpeed * Vec3::AXE_X() );
-        qDebug() << "D clicked";
-        ui->glWidget->update();
-    });
-
     connect(ui->actionMoveForward, &QAction::triggered, this, [this, cameraMoveSpeed]() {
-        ui->glWidget->camera->translate( cameraMoveSpeed * Vec3::AXE_Z() );
-        qDebug() << "W clicked";
+        qDebug() << "W clicked. To front";
+        ui->glWidget->camera->lookAt(ui->glWidget->camera->position() - Vec3::AXE_Z(), Vec3(0,0,0), Vec3::AXE_Y());
+        qDebug() << "Position: " << QString(ui->glWidget->camera->position().toStdString());
+        qDebug() << "***************";
         ui->glWidget->update();
+
     });
 
     connect(ui->actionMoveBack, &QAction::triggered, this, [this, cameraMoveSpeed]() {
-        ui->glWidget->camera->translate( cameraMoveSpeed * -Vec3::AXE_Z() );
-        qDebug() << "S clicked";
+        qDebug() << "S clicked. To back";
+        ui->glWidget->camera->lookAt(ui->glWidget->camera->position() + Vec3::AXE_Z(), Vec3(0,0,0), Vec3::AXE_Y());
+        qDebug() << "Position: " << QString(ui->glWidget->camera->position().toStdString());
+        qDebug() << "***************";
         ui->glWidget->update();
+
     });
 
-    connect(ui->actionRotate_left, &QAction::triggered, this, [this, cameraRotationSpeed ]() {
-        ui->glWidget->camera->rotate( cameraRotationSpeed, Vec3::AXE_Y() );
-        qDebug() << "Rotate left";
+    connect(ui->actionMoveLeft, &QAction::triggered, this, [this, cameraMoveSpeed]() {
+        qDebug() << "A clicked. To left";
+        ui->glWidget->camera->lookAt(ui->glWidget->camera->position() - Vec3::AXE_X(), Vec3(0,0,0), Vec3::AXE_Y());
+        qDebug() << "Position: " << QString(ui->glWidget->camera->position().toStdString());
+        qDebug() << "***************";
         ui->glWidget->update();
+
     });
 
-    connect(ui->actionRotate_right, &QAction::triggered, this, [this, cameraRotationSpeed ]() {
-        ui->glWidget->camera->rotate( -cameraRotationSpeed, Vec3::AXE_Y() );
-        qDebug() << "Rotate right";
+    connect(ui->actionMoveRight, &QAction::triggered, this, [this, cameraMoveSpeed]() {
+        qDebug() << "D clicked. To left";
+        ui->glWidget->camera->lookAt(ui->glWidget->camera->position() + Vec3::AXE_X(), Vec3(0,0,0), Vec3::AXE_Y());
+        qDebug() << "Position: " << QString(ui->glWidget->camera->position().toStdString());
+        qDebug() << "***************";
         ui->glWidget->update();
+
+    });
+
+    connect(ui->actionMove_up, &QAction::triggered, this, [this, cameraMoveSpeed]() {
+        qDebug() << "Z clicked. To up";
+        ui->glWidget->camera->lookAt(ui->glWidget->camera->position() + Vec3::AXE_Y(), Vec3(0,0,0), Vec3::AXE_Y());
+        qDebug() << "Position: " << QString(ui->glWidget->camera->position().toStdString());
+        qDebug() << "***************";
+        ui->glWidget->update();
+
+    });
+
+    connect(ui->actionMove_bottom, &QAction::triggered, this, [this, cameraMoveSpeed]() {
+        qDebug() << "X clicked. To bottom";
+        ui->glWidget->camera->lookAt(ui->glWidget->camera->position() - Vec3::AXE_Y(), Vec3(0,0,0), Vec3::AXE_Y());
+        qDebug() << "Position: " << QString(ui->glWidget->camera->position().toStdString());
+        qDebug() << "***************";
+        ui->glWidget->update();
+
     });
 
     connect(ui->actionExit, &QAction::triggered, this, [this]() {
@@ -69,6 +86,14 @@ MainWindow::MainWindow(QWidget *parent) :
         ui->actionMoveBack->trigger();
     });
 
+    connect(ui->zButton, &QPushButton::clicked, this, [=]() {
+        ui->actionMove_up->trigger();
+    });
+
+    connect(ui->xButton, &QPushButton::clicked, this, [=](){
+        ui->actionMove_bottom->trigger();
+    });
+
     connect(ui->qButton, &QPushButton::clicked, this, [=](){
         ui->actionRotate_left->trigger();
     });
@@ -76,6 +101,28 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->eButton, &QPushButton::clicked, this, [=](){
         ui->actionRotate_right->trigger();
     });
+
+    connect(ui->glWidget, &glRenderQtWidget::cameraPositionChanged, this, [this](Vec3 position) {
+        ui->positionX->setText(QString::number(ui->glWidget->camera->position().x));
+        ui->positionY->setText(QString::number(ui->glWidget->camera->position().y));
+        ui->positionZ->setText(QString::number(ui->glWidget->camera->position().z));
+    });
+
+    connect(ui->glWidget, &glRenderQtWidget::cameraTargetChanged, this, [this](Vec3 target) {
+        ui->targetX->setText(QString::number(ui->glWidget->camera->target().x));
+        ui->targetY->setText(QString::number(ui->glWidget->camera->target().y));
+        ui->targetZ->setText(QString::number(ui->glWidget->camera->target().z));
+    });
+
+
+    addAction(ui->actionMoveBack);
+    addAction(ui->actionMoveForward);
+    addAction(ui->actionMoveLeft);
+    addAction(ui->actionMoveRight);
+    addAction(ui->actionMove_up);
+    addAction(ui->actionMove_bottom);
+    addAction(ui->actionRotate_left);
+    addAction(ui->actionRotate_right);
 
 }
 
