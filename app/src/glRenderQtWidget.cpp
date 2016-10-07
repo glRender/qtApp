@@ -171,8 +171,8 @@ void glRenderQtWidget::initializeGL()
     m_logicUpdater.setInterval(1);
     connect(&m_logicUpdater, &QTimer::timeout, this, [&]() {
         scene->update();
-        emit cameraPositionChanged( camera->position() );
-        emit cameraTargetChanged( camera->target() );
+//        emit cameraPositionChanged( camera->position() );
+//        emit cameraTargetChanged( camera->target() );
 
     });
     m_logicUpdater.start();
@@ -215,4 +215,10 @@ void glRenderQtWidget::paintGL()
     glClear      ( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
 
     scene->draw();
+}
+
+void glRenderQtWidget::mouseMoveEvent(QMouseEvent *event)
+{
+    Vec2 position((float)event->pos().x() / width(), (float)event->pos().y() / height());
+    emit mousePositionChanged(position);
 }

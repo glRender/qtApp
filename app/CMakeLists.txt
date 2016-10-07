@@ -30,15 +30,15 @@ qt5_wrap_ui (lib_ui_moc  ${lib_ui})
 include_directories (
         ${SRC}
         ${PROJECT_BINARY_DIR}/app
-        ${PROJECT_BINARY_DIR}/libs/glRender/include
+        ${GLRENDER_INCLUDE_DIR}
         ${GLEW_INCLUDE_DIRS})
 
-add_library (Lib SHARED 
+add_library (Lib SHARED
     ${lib_src}
     ${lib_hdr_moc}
     ${lib_ui_moc})
 
-target_link_libraries (Lib Qt5::Widgets Qt5::OpenGL ${GLEW_LIBRARIES} ${PROJECT_BINARY_DIR}/libs/glRender/libglRender.so)
+target_link_libraries (Lib Qt5::Widgets Qt5::OpenGL ${GLEW_LIBRARIES} ${GLRENDER_LIBRARIES})
 
 add_executable(App ${bin_src})
 target_link_libraries (App Lib)

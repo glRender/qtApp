@@ -6,6 +6,7 @@
 #include "glRender.h"
 
 #include <QTimer>
+#include <QMouseEvent>
 
 using namespace glRender;
 
@@ -162,6 +163,8 @@ private:
     virtual void resizeGL(int w, int h);
     virtual void paintGL();
 
+    virtual void mouseMoveEvent(QMouseEvent *event);
+
     QColor m_backgroundColor = QColor(1,0,0,1);
 
     Model * model0;
@@ -177,6 +180,7 @@ private:
 signals:
     void cameraPositionChanged(Vec3 position);
     void cameraTargetChanged(Vec3 target);
+    void mousePositionChanged(Vec2 position);
 
 public slots:
 
