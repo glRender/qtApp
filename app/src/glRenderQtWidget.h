@@ -10,22 +10,6 @@
 
 using namespace glRender;
 
-//class MyModel : public NodeModel
-//{
-//public:
-//    MyModel(Model * model) :
-//        NodeModel(model)
-//    {
-
-//    }
-
-//    void update() override
-//    {
-////        model()->translate(0.01, 0.0, 0.0);
-//    }
-
-//};
-
 class MyModel : public Node
 {
 public:
@@ -120,37 +104,6 @@ private:
 
 };
 
-//class MyCamera : public NodeCamera
-//{
-//public:
-//    MyCamera(Camera * camera) :
-//        NodeCamera(camera)
-//    {
-////        camera->rotate(180, Vec3::AXE_Y());
-////        camera->translate(50*Vec3::AXE_Z());
-
-//    }
-
-//    void draw(Camera * camera) override
-//    {
-
-//    }
-
-//    void update() override
-//    {
-////        camera()->translate(0.0, 0.0, 0.5);
-
-////        Vec3 p = camera()->position();
-////
-////        camera()->translate(-p);
-////        camera()->rotate( -0.1, Vec3::AXE_Y() );
-////        camera()->rotate( -7, Vec3::AXE_Z() );
-////        camera()->translate(p);
-//    }
-
-//};
-
-
 class glRenderQtWidget : public QGLWidget
 {
     Q_OBJECT
@@ -167,12 +120,15 @@ private:
 
     QColor m_backgroundColor = QColor(1,0,0,1);
 
-    Model * model0;
-    Model * model1;
+    Model *model0;
+    Model *model1;
+
+    MyModel *np;
+    MyModel *fp;
 
     Vec3 cameraPos;
 
-    Scene * scene;
+    Scene *scene;
 
     QTimer m_drawUpdater;
     QTimer m_logicUpdater;

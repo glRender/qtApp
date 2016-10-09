@@ -33,17 +33,13 @@ void glRenderQtWidget::initializeGL()
     printf ("GLSL: %s\n", glGetString (GL_SHADING_LANGUAGE_VERSION));
     printf ("**************************\n");
 
-    glClearColor ( 0.5, 0.5, 0.5, 1.0111 );
+    glClearColor ( 0.5, 0.5, 0.5, 1.0 );
     glEnable     ( GL_DEPTH_TEST );
     glDepthFunc  ( GL_LEQUAL );
 
-    camera = new glRender::PerspectiveCamera( 50.0 / 180.0 * MATH_PI, 16.0f/9.0f, 0.1f, 200.0f );
-    camera->lookAt(Vec3(0,0,10), Vec3(0,0,0), Vec3::AXE_Y());
-
-//    qDebug() << "Front: " << QString(camera->front().toStdString());
-//    qDebug() << "Right: " << QString(camera->right().toStdString());
-//    qDebug() << "Up: " << QString(camera->m_up.toStdString());
-//    qDebug() << "Position: " << QString(camera->position().toStdString());
+    camera = new glRender::PerspectiveCamera( 90.0 / 180.0 * MATH_PI, 16.0f/9.0f, 1.0f, 200.0f );
+    camera->lookAt(Vec3(0,0,0), Vec3(0,0,-10), Vec3::AXE_Y());
+//    camera->lookAt(Vec3(-10,0,-10), Vec3(10,0,-10), Vec3::AXE_Y());
 
     scene = new glRender::Scene();
     scene->setActiveCamera(camera);
@@ -93,7 +89,8 @@ void glRenderQtWidget::initializeGL()
     geometry1->setGeometryBuffer( "vertex", new GeometryBufferVec3( vertices ) );
     geometry1->setGeometryBuffer( "uv", new GeometryBufferVec2( uvs ) );
 
-    Geometry * geometry0 = GeometryHelper::Cube(1.0);
+    Geometry * geometry0 = GeometryHelper::Cube(0.001);
+    Geometry * geometry01 = GeometryHelper::Cube(0.11);
 
     ShaderProgram * shaderProgram0 = new ShaderProgram("data/shader0.vertex", "data/shader0.frag");
     shaderProgram0->setAttribute( "vertex", AttributeType::XYZ);
@@ -101,6 +98,9 @@ void glRenderQtWidget::initializeGL()
 
     ShaderProgram * shaderProgram1 = new ShaderProgram("data/shader1.vertex", "data/shader1.frag");
     shaderProgram1->setAttribute( "vertex", AttributeType::XYZ);
+
+    ShaderProgram * spRed = new ShaderProgram("data/red.vertex", "data/red.frag");
+    spRed->setAttribute( "vertex", AttributeType::XYZ);
 
     Textures * textures0 = new Textures();
     textures0->setTexture( "texture0", new Texture("data/Plywood_1024x640.png") );
@@ -113,7 +113,7 @@ void glRenderQtWidget::initializeGL()
     textures2->setTexture( "texture0", new Texture("data/a.png") );
 
     MyModel * n0 = new MyModel(geometry1, textures0, shaderProgram0);
-    scene->addNode(n0);
+//    scene->addNode(n0);
 
     int halfSize = 500;
     int volume = 2;
@@ -123,7 +123,7 @@ void glRenderQtWidget::initializeGL()
                     Vec3(halfSize, -volume, -halfSize),
                     Vec3(-halfSize, -volume, halfSize),
                     Vec3(halfSize, -volume, halfSize)), textures0, shaderProgram0);
-    scene->addNode(n1);
+//    scene->addNode(n1);
 
     srand( time(0) );
 
@@ -177,32 +177,20 @@ void glRenderQtWidget::initializeGL()
     });
     m_logicUpdater.start();
 
+    np = new MyModel(GeometryHelper::Cube(0.05f), textures0, shaderProgram0);
+    np->model()->setPosition( 0,0,0 );
+    np->model()->setWireframeMode(true);
+    scene->addNode(np);
+
+    fp = new MyModel(GeometryHelper::Cube(1.0f), textures0, shaderProgram0);
+    fp->model()->setPosition( 0,0,0 );
+    fp->model()->setWireframeMode(false);
+    scene->addNode(fp);
+
 }
 
 void glRenderQtWidget::resizeGL(int w, int h)
 {
-//    int minSide = qMin(w, h);
-//    int x;
-//    int y;
-
-//    if (w > h)
-//    {
-//        x = minSide;//w / 2 - minSide / 2;
-//        y = 0;
-//    } else
-//    if (w < h)
-//    {
-//        x = 0;
-//        y = minSide;//h / 2 - minSide / 2;
-
-//    }
-//    if (w == h)
-//    {
-//        x = 0;
-//        y = 0;
-//    }
-
-//    glViewport ( x, y, (GLsizei)minSide, (GLsizei)minSide );
     glViewport ( 0, 0, (GLsizei)w, (GLsizei)h );
 
 }
@@ -221,4 +209,22 @@ void glRenderQtWidget::mouseMoveEvent(QMouseEvent *event)
 {
     Vec2 position((float)event->pos().x() / width(), (float)event->pos().y() / height());
     emit mousePositionChanged(position);
+
+    Vec2 shiftedPosition = position - Vec2(0.5f, 0.5f);
+
+    float n = camera->nearPlane() /*1.0*/;
+    float f = camera->farPlane() /*10.0*/;
+    float angle = camera->fieldOfView() / 2.0;
+
+    float widthFarPlane = atan(angle) * f * 2;
+    float widthNearPlane = atan(angle) * n * 2;
+
+    Vec3 p0(shiftedPosition.x * widthNearPlane * camera->aspectRatio(), -shiftedPosition.y * widthNearPlane, -n);
+    Vec3 p1(shiftedPosition.x * widthFarPlane * camera->aspectRatio(), -shiftedPosition.y * widthFarPlane, -f);
+
+    np->model()->setPosition(p0);
+    fp->model()->setPosition(p1);
+
+    qDebug() << p0.x << p0.y << p0.z << " " << p1.x << p1.y << p1.z;
+
 }

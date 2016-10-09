@@ -4,12 +4,6 @@ set (CMAKE_CXX_STANDARD 11)
 
 find_package (Qt5Widgets)
 find_package (Qt5OpenGL)
-
-if(WIN32)
-    set(GLEW_LIBRARY ${CMAKE_CURRENT_SOURCE_DIR}/libs/glew/lib/glew32.dll )
-    set(GLEW_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/libs/glew/include )
-endif()
-
 find_package(GLEW REQUIRED)
 
 set (SRC src)

@@ -14,7 +14,10 @@ MainWindow::MainWindow(QWidget *parent) :
 
     connect(ui->actionMoveForward, &QAction::triggered, this, [this, cameraMoveSpeed]() {
         qDebug() << "W clicked. To front";
-        ui->glWidget->camera->lookAt(ui->glWidget->camera->position() - Vec3::AXE_Z(), Vec3(0,0,0), Vec3::AXE_Y());
+        ui->glWidget->camera->lookAt(
+                    ui->glWidget->camera->position() - Vec3::AXE_Z(),
+                    Vec3(0,0,-100),
+                    Vec3::AXE_Y());
 //        qDebug() << "Position: " << QString(ui->glWidget->camera->position().toStdString());
         qDebug() << "***************";
         ui->glWidget->update();
@@ -23,7 +26,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     connect(ui->actionMoveBack, &QAction::triggered, this, [this, cameraMoveSpeed]() {
         qDebug() << "S clicked. To back";
-        ui->glWidget->camera->lookAt(ui->glWidget->camera->position() + Vec3::AXE_Z(), Vec3(0,0,0), Vec3::AXE_Y());
+        ui->glWidget->camera->lookAt(ui->glWidget->camera->position() + Vec3::AXE_Z(), Vec3(0,0,-100), Vec3::AXE_Y());
 //        qDebug() << "Position: " << QString(ui->glWidget->camera->position().toStdString());
         qDebug() << "***************";
         ui->glWidget->update();
@@ -115,7 +118,8 @@ MainWindow::MainWindow(QWidget *parent) :
     });
 
     connect(ui->glWidget, &glRenderQtWidget::mousePositionChanged, this, [this](Vec2 position) {
-        qDebug() << position.toStdString();
+//        qDebug() << position.toStdString();
+
     });
 
     addAction(ui->actionMoveBack);
