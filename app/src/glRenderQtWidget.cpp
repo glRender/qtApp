@@ -136,7 +136,7 @@ void glRenderQtWidget::initializeGL()
             n->model()->setPosition( ((rand() % 50)) - 25, ((rand() % 50)) - 25, ((rand() % 50) - 25) );
             n->model()->setWireframeMode(false);
 
-//            scene->addNode(n);
+//            scene->addNsode(n);
 
         } else
         if ((int)(rand() % 3) == 1)
@@ -212,8 +212,8 @@ void glRenderQtWidget::mouseMoveEvent(QMouseEvent *event)
 
     Vec2 shiftedPosition = position - Vec2(0.5f, 0.5f);
 
-    float n = camera->nearPlane() /*1.0*/;
-    float f = camera->farPlane() /*10.0*/;
+    float n = /*camera->nearPlane()*/ 1.0;
+    float f = /*camera->farPlane()*/ 10.0;
     float angle = camera->fieldOfView() / 2.0;
 
     float widthFarPlane = atan(angle) * f * 2;
@@ -222,8 +222,17 @@ void glRenderQtWidget::mouseMoveEvent(QMouseEvent *event)
     Vec3 p0(shiftedPosition.x * widthNearPlane * camera->aspectRatio(), -shiftedPosition.y * widthNearPlane, -n);
     Vec3 p1(shiftedPosition.x * widthFarPlane * camera->aspectRatio(), -shiftedPosition.y * widthFarPlane, -f);
 
-    np->model()->setPosition(p0);
-    fp->model()->setPosition(p1);
+    Vec4 tmpP0(p0.x, p0.y, p0.z, 1.0);
+    Vec4 tmpP1(p1.x, p1.y, p1.z, 1.0);
+
+    Mat4 m = camera->transformationMatrix();
+    m.invert();
+
+    tmpP0 = m * tmpP0;
+    tmpP1 = m * tmpP1;
+
+    np->model()->setPosition(Vec3(tmpP0.x, tmpP0.y, tmpP0.z));
+    fp->model()->setPosition(Vec3(tmpP1.x, tmpP1.y, tmpP1.z));
 
     qDebug() << p0.x << p0.y << p0.z << " " << p1.x << p1.y << p1.z;
 

@@ -224,10 +224,9 @@
     <addaction name="actionMoveRight"/>
     <addaction name="actionMoveForward"/>
     <addaction name="actionMoveBack"/>
-    <addaction name="actionRotate_left"/>
-    <addaction name="actionRotate_right"/>
     <addaction name="actionMove_up"/>
     <addaction name="actionMove_bottom"/>
+    <addaction name="actionMove_yawLeft"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuHelp"/>
@@ -391,6 +390,17 @@
    </property>
    <property name="shortcut">
     <string>X</string>
+   </property>
+  </action>
+  <action name="actionMove_yawLeft">
+   <property name="text">
+    <string>actionMove_yawLeft</string>
+   </property>
+   <property name="toolTip">
+    <string>actionMove_yawLeft</string>
+   </property>
+   <property name="shortcut">
+    <string>Q</string>
    </property>
   </action>
  </widget>
