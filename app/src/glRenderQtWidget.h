@@ -134,9 +134,8 @@ private:
     QTimer m_logicUpdater;
 
 signals:
-    void cameraPositionChanged(Vec3 position);
-    void cameraTargetChanged(Vec3 target);
     void mousePositionChanged(Vec2 position);
+    void updated();
 
 public slots:
 
