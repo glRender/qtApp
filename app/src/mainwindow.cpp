@@ -57,22 +57,8 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->actionMove_yawLeft, &QAction::triggered, this, [this, cameraRotationSpeed]() {
         qDebug() << "Q clicked. To up";
 
-        Vec3 newPos = ui->glWidget->camera->position();
-
-        Vec3 newTarget = ui->glWidget->camera->target() - ui->glWidget->camera->position();
-        Vec4 tmp(newTarget.x, newTarget.y, newTarget.z, 1.0f);
-        Mat4 rotationMatrix;
-        rotationMatrix.rotate(cameraRotationSpeed, 0,1,0);
-        tmp = rotationMatrix * tmp;
-        newTarget.set(tmp.x, tmp.y, tmp.z);
-        newTarget = newTarget + ui->glWidget->camera->position();
-
-        Vec3 newUp = ui->glWidget->camera->up();
-
-        ui->glWidget->camera->lookAt(
-                    newPos,
-                    newTarget,
-                    newUp);
+        ui->glWidget->camera->m_yaw -= cameraRotationSpeed;
+        ui->glWidget->camera->setEulerAngles(ui->glWidget->camera->m_pitch, ui->glWidget->camera->m_yaw, ui->glWidget->camera->m_roll);
 
         ui->glWidget->update();
         qDebug() << "***************";
@@ -82,22 +68,8 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->actionMove_yawRight, &QAction::triggered, this, [this, cameraRotationSpeed]() {
         qDebug() << "E clicked. To up";
 
-        Vec3 newPos = ui->glWidget->camera->position();
-
-        Vec3 newTarget = ui->glWidget->camera->target() - ui->glWidget->camera->position();
-        Vec4 tmp(newTarget.x, newTarget.y, newTarget.z, 1.0f);
-        Mat4 rotationMatrix;
-        rotationMatrix.rotate(-cameraRotationSpeed, 0,1,0);
-        tmp = rotationMatrix * tmp;
-        newTarget.set(tmp.x, tmp.y, tmp.z);
-        newTarget = newTarget + ui->glWidget->camera->position();
-
-        Vec3 newUp = ui->glWidget->camera->up();
-
-        ui->glWidget->camera->lookAt(
-                    newPos,
-                    newTarget,
-                    newUp);
+        ui->glWidget->camera->m_yaw += cameraRotationSpeed;
+        ui->glWidget->camera->setEulerAngles(ui->glWidget->camera->m_pitch, ui->glWidget->camera->m_yaw, ui->glWidget->camera->m_roll);
 
         ui->glWidget->update();
         qDebug() << "***************";
@@ -141,9 +113,17 @@ MainWindow::MainWindow(QWidget *parent) :
         ui->targetY->setText(QString::number(ui->glWidget->camera->target().y, 'f', 2));
         ui->targetZ->setText(QString::number(ui->glWidget->camera->target().z, 'f', 2));
 
-        ui->dirX->setText(QString::number(ui->glWidget->camera->normalizedDirection().x, 'f', 2));
-        ui->dirY->setText(QString::number(ui->glWidget->camera->normalizedDirection().y, 'f', 2));
-        ui->dirZ->setText(QString::number(ui->glWidget->camera->normalizedDirection().z, 'f', 2));
+        ui->frontX->setText(QString::number(ui->glWidget->camera->front().x, 'f', 2));
+        ui->frontY->setText(QString::number(ui->glWidget->camera->front().y, 'f', 2));
+        ui->frontZ->setText(QString::number(ui->glWidget->camera->front().z, 'f', 2));
+
+        ui->rightX->setText(QString::number(ui->glWidget->camera->right().x, 'f', 2));
+        ui->rightY->setText(QString::number(ui->glWidget->camera->right().y, 'f', 2));
+        ui->rightZ->setText(QString::number(ui->glWidget->camera->right().z, 'f', 2));
+
+        ui->upX->setText(QString::number(ui->glWidget->camera->up().x, 'f', 2));
+        ui->upY->setText(QString::number(ui->glWidget->camera->up().y, 'f', 2));
+        ui->upZ->setText(QString::number(ui->glWidget->camera->up().z, 'f', 2));
 
     });
 
