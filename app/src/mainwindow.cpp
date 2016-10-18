@@ -14,42 +14,42 @@ MainWindow::MainWindow(QWidget *parent) :
 
     connect(ui->actionMoveForward, &QAction::triggered, this, [this, cameraMoveSpeed]() {
         qDebug() << "W clicked. To front";
-        ui->glWidget->camera->shift(ui->glWidget->camera->front() * cameraMoveSpeed);
+        ui->glWidget->camera->setPosition( ui->glWidget->camera->position() + ui->glWidget->camera->front() * cameraMoveSpeed );
         ui->glWidget->update();
         qDebug() << "***************";
     });
 
     connect(ui->actionMoveBack, &QAction::triggered, this, [this, cameraMoveSpeed]() {
         qDebug() << "S clicked. To back";
-        ui->glWidget->camera->shift(-ui->glWidget->camera->front() * cameraMoveSpeed);
+        ui->glWidget->camera->setPosition( ui->glWidget->camera->position() - ui->glWidget->camera->front() * cameraMoveSpeed );
         ui->glWidget->update();
         qDebug() << "***************";
     });
 
     connect(ui->actionMoveLeft, &QAction::triggered, this, [this, cameraMoveSpeed]() {
         qDebug() << "A clicked. To left";
-        ui->glWidget->camera->shift(-ui->glWidget->camera->right() * cameraMoveSpeed);
+        ui->glWidget->camera->setPosition( ui->glWidget->camera->position() - ui->glWidget->camera->right() * cameraMoveSpeed );
         ui->glWidget->update();
         qDebug() << "***************";
     });
 
     connect(ui->actionMoveRight, &QAction::triggered, this, [this, cameraMoveSpeed]() {
         qDebug() << "D clicked. To left";
-        ui->glWidget->camera->shift(ui->glWidget->camera->right() * cameraMoveSpeed);
+        ui->glWidget->camera->setPosition( ui->glWidget->camera->position() + ui->glWidget->camera->right() * cameraMoveSpeed );
         ui->glWidget->update();
         qDebug() << "***************";
     });
 
     connect(ui->actionMove_up, &QAction::triggered, this, [this, cameraMoveSpeed]() {
         qDebug() << "Z clicked. To up";
-        ui->glWidget->camera->shift(ui->glWidget->camera->up() * cameraMoveSpeed);
+        ui->glWidget->camera->setPosition( ui->glWidget->camera->position() + ui->glWidget->camera->up() * cameraMoveSpeed );
         ui->glWidget->update();
         qDebug() << "***************";
     });
 
     connect(ui->actionMove_bottom, &QAction::triggered, this, [this, cameraMoveSpeed]() {
         qDebug() << "X clicked. To bottom";
-        ui->glWidget->camera->shift(-ui->glWidget->camera->up() * cameraMoveSpeed);
+        ui->glWidget->camera->setPosition( ui->glWidget->camera->position() - ui->glWidget->camera->up() * cameraMoveSpeed );
         ui->glWidget->update();
         qDebug() << "***************";
     });
@@ -57,8 +57,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->actionMove_yawLeft, &QAction::triggered, this, [this, cameraRotationSpeed]() {
         qDebug() << "Q clicked. To up";
 
-        ui->glWidget->camera->m_yaw -= cameraRotationSpeed;
-        ui->glWidget->camera->setEulerAngles(ui->glWidget->camera->m_pitch, ui->glWidget->camera->m_yaw, ui->glWidget->camera->m_roll);
+        ui->glWidget->camera->setEulerAngles( ui->glWidget->camera->pitch(), ui->glWidget->camera->yaw() - cameraRotationSpeed, ui->glWidget->camera->roll() );
 
         ui->glWidget->update();
         qDebug() << "***************";
@@ -68,8 +67,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->actionMove_yawRight, &QAction::triggered, this, [this, cameraRotationSpeed]() {
         qDebug() << "E clicked. To up";
 
-        ui->glWidget->camera->m_yaw += cameraRotationSpeed;
-        ui->glWidget->camera->setEulerAngles(ui->glWidget->camera->m_pitch, ui->glWidget->camera->m_yaw, ui->glWidget->camera->m_roll);
+        ui->glWidget->camera->setEulerAngles( ui->glWidget->camera->pitch(), ui->glWidget->camera->yaw() + cameraRotationSpeed, ui->glWidget->camera->roll() );
 
         ui->glWidget->update();
         qDebug() << "***************";
