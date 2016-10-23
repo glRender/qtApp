@@ -9,10 +9,18 @@ find_package(GLEW REQUIRED)
 set (SRC src)
 
 set (lib_src ${SRC}/glRenderQtWidget.cpp
-             ${SRC}/mainwindow.cpp)
+             ${SRC}/mainwindow.cpp
+             ${SRC}/Mark.cpp
+             ${SRC}/WoodenBox.cpp
+             ${SRC}/BrickBox.cpp
+)
 
 set (lib_hdr ${SRC}/glRenderQtWidget.h
-             ${SRC}/mainwindow.h)
+             ${SRC}/mainwindow.h
+             ${SRC}/Mark.hpp
+             ${SRC}/WoodenBox.hpp
+             ${SRC}/BrickBox.hpp
+)
 
 set (lib_ui  ${SRC}/mainwindow.ui)
 
