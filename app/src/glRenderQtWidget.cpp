@@ -71,7 +71,7 @@ void glRenderQtWidget::initializeGL()
         if ((int)(rand() % 3) == 2)
         {
             Mark * n = new Mark(0,1,0,1);
-            n->model()->setWireframeMode(true);
+            n->model()->setWireframeMode(false);
             n->setPosition(Vec3(((rand() % 50)) - 25, ((rand() % 50)) - 25, ((rand() % 50) - 25)));
             scene->addNode(n);
 
@@ -120,7 +120,7 @@ void glRenderQtWidget::paintGL()
     scene->draw();
 }
 
-void glRenderQtWidget::mouseMoveEvent(QMouseEvent *event)
+void glRenderQtWidget::mouseReleaseEvent(QMouseEvent *event)
 {
     float n = camera->nearPlane();
     float f = camera->farPlane();

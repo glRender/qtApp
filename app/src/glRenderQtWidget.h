@@ -27,18 +27,12 @@ private:
     virtual void initializeGL();
     virtual void resizeGL(int w, int h);
     virtual void paintGL();
-
-    virtual void mouseMoveEvent(QMouseEvent *event);
+    virtual void mouseReleaseEvent(QMouseEvent *event);
 
     QColor m_backgroundColor = QColor(1,0,0,1);
 
-    Model * model0;
-    Model * model1;
-
     Mark * np;
     Mark * fp;
-
-    Vec3 cameraPos;
 
     Scene * scene;
 
