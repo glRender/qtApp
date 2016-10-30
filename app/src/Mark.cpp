@@ -3,7 +3,8 @@
 namespace glRender {
 
 Mark::Mark(float r, float g, float b, float size)
-    : m_r(r)
+    : m_bb(new AABB(Vec3(0,0,0), size))
+    , m_r(r)
     , m_g(g)
     , m_b(b)
 {
@@ -29,7 +30,7 @@ Mark::Mark(float r, float g, float b, float size)
 
 Mark::~Mark()
 {
-
+    delete m_bb;
 }
 
 void Mark::update()
@@ -49,6 +50,38 @@ void Mark::draw(Camera *camera)
 Model *Mark::model()
 {
     return m_model;
+}
+
+const AABB * Mark::bb()
+{
+    return m_bb;
+}
+
+void Mark::setPosition(Vec3 pos)
+{
+    m_model->setPosition(pos);
+    m_bb->setCenter(pos);
+}
+
+void Mark::setPosition(float x, float y, float z)
+{
+    setPosition(Vec3(x, y, z));
+}
+
+void Mark::changeColor()
+{
+    if (m_r == 1 && m_g == 0 && m_b == 0)
+    {
+        m_r = 0;
+        m_g = 1;
+        m_b = 0;
+    }
+    else if (m_r == 0 && m_g == 1 && m_b == 0)
+    {
+        m_r = 1;
+        m_g = 0;
+        m_b = 0;
+    }
 }
 
 }

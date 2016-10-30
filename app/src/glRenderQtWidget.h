@@ -40,7 +40,7 @@ private:
 
     Vec3 cameraPos;
 
-    Scene *scene;
+    Scene * scene;
 
     QTimer m_drawUpdater;
     QTimer m_logicUpdater;

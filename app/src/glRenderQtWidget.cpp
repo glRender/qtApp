@@ -67,6 +67,14 @@ void glRenderQtWidget::initializeGL()
             n->model()->setWireframeMode(false);
             scene->addNode(n);
 
+        } else
+        if ((int)(rand() % 3) == 2)
+        {
+            Mark * n = new Mark(0,1,0,1);
+            n->model()->setWireframeMode(true);
+            n->setPosition(Vec3(((rand() % 50)) - 25, ((rand() % 50)) - 25, ((rand() % 50) - 25)));
+            scene->addNode(n);
+
         }
     }
 
@@ -83,12 +91,15 @@ void glRenderQtWidget::initializeGL()
     });
     m_logicUpdater.start();
 
-    np = new Mark(1,0,0,1);
-    np->model()->setPosition( 0,0,0 );
-    scene->addNode(np);
+//    np = new Mark(1,0,0,1);
+//    np->model()->setWireframeMode(true);
+//    np->setPos( Vec3(0,0,0) );
+//    scene->addNode(np);
 
     fp = new Mark(0,1,0,1);
-    fp->model()->setPosition( 4,0,0 );
+    fp->model()->setWireframeMode(true);
+    fp->setPosition(Vec3(0,0,0));
+//    fp->model()->setPosition( 0,0,-3 );
     scene->addNode(fp);
 
 }
@@ -111,33 +122,49 @@ void glRenderQtWidget::paintGL()
 
 void glRenderQtWidget::mouseMoveEvent(QMouseEvent *event)
 {
-    Vec2 position((float)event->pos().x() / width(), (float)event->pos().y() / height());
-    emit mousePositionChanged(position);
+    float n = camera->nearPlane();
+    float f = camera->farPlane();
 
-    Vec2 shiftedPosition = position - Vec2(0.5f, 0.5f);
+    Vec2 normDeviceCoords(
+                2.0f * (float)event->pos().x() / width() - 1.0f,
+                1.0f - 2.0f * (float)event->pos().y() / height() );
 
-    float n = /*camera->nearPlane()*/ 1.0;
-    float f = /*camera->farPlane()*/ 10.0;
-    float angle = camera->fieldOfView() / 2.0;
+    Vec4 clipCoords(
+                normDeviceCoords.x,
+                normDeviceCoords.y,
+                -1.0f,
+                1.0f );
 
-    float widthFarPlane = atan(angle) * f * 2;
-    float widthNearPlane = atan(angle) * n * 2;
+    Mat4 p = camera->projectionMatrix();
+    p.invert();
+    Vec4 eyeCoords = p * clipCoords;
+    eyeCoords.z = -1.0f;
+    eyeCoords.w = 0.0f;
 
-    Vec3 p0(shiftedPosition.x * widthNearPlane * camera->aspectRatio(), -shiftedPosition.y * widthNearPlane, -n);
-    Vec3 p1(shiftedPosition.x * widthFarPlane * camera->aspectRatio(), -shiftedPosition.y * widthFarPlane, -f);
+    Mat4 t = camera->transformationMatrix();
+    t.invert();
+    Vec4 tmp = t * eyeCoords;
+    Vec3 worldCoords(tmp.x, tmp.y, tmp.z);
+    worldCoords.normalize();
 
-    Vec4 tmpP0(p0.x, p0.y, p0.z, 1.0);
-    Vec4 tmpP1(p1.x, p1.y, p1.z, 1.0);
+    Vec3 origin = camera->position() + worldCoords * n;
+    Vec3 target = camera->position() + worldCoords * f;
 
-    Mat4 m = camera->transformationMatrix();
-    m.invert();
+    Ray * ray = new Ray(origin, target);
 
-    tmpP0 = m * tmpP0;
-    tmpP1 = m * tmpP1;
+    scene->traverse([ray](Node * node) {
+        Mark * m = dynamic_cast<Mark*>(node);
+        if (m != nullptr)
+        {
+            if (m->bb()->intersects(ray))
+            {
+                m->changeColor();
+                qDebug() << "Has intersection!";
+            }
+        }
 
-    np->model()->setPosition(Vec3(tmpP0.x, tmpP0.y, tmpP0.z));
-    fp->model()->setPosition(Vec3(tmpP1.x, tmpP1.y, tmpP1.z));
+    });
 
-    qDebug() << p0.x << p0.y << p0.z << " " << p1.x << p1.y << p1.z;
+    qDebug() << origin.x << origin.y << origin.z << " -> " << target.x << target.y << target.z;
 
 }

@@ -15,9 +15,16 @@ public:
   void draw(Camera * camera) override;
 
   Model * model();
+  const AABB * bb();
+
+  void setPosition(Vec3 pos);
+  void setPosition(float x, float y, float z);
+
+  void changeColor();
 
 private:
   Model * m_model;
+  AABB * m_bb;
 
   float m_r;
   float m_g;
