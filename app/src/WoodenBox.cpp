@@ -27,7 +27,8 @@ WoodenBox::WoodenBox()
 
 WoodenBox::~WoodenBox()
 {
-
+    delete m_model;
+    delete m_aabb;
 }
 
 void WoodenBox::update()
@@ -40,9 +41,14 @@ void WoodenBox::draw(Camera *camera)
     m_model->draw(camera);
 }
 
-Model *WoodenBox::model()
+Model * WoodenBox::model()
 {
     return m_model;
+}
+
+IBoundingBox * WoodenBox::bb()
+{
+    return m_aabb;
 }
 
 }

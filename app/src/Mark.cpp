@@ -3,11 +3,12 @@
 namespace glRender {
 
 Mark::Mark(float r, float g, float b, float size)
-    : m_bb(new AABB(Vec3(0,0,0), size))
+    : m_aabb(new AABB(Vec3(0,0,0), size))
     , m_r(r)
     , m_g(g)
     , m_b(b)
 {
+    setSelectable(true);
     Geometry * geometry = GeometryHelper::Cube(size);
 
     Textures * textures = new Textures();
@@ -30,7 +31,7 @@ Mark::Mark(float r, float g, float b, float size)
 
 Mark::~Mark()
 {
-    delete m_bb;
+    delete m_aabb;
 }
 
 void Mark::update()
@@ -47,25 +48,14 @@ void Mark::draw(Camera *camera)
     m_model->draw(camera);
 }
 
-Model *Mark::model()
+Model * Mark::model()
 {
     return m_model;
 }
 
-const AABB * Mark::bb()
+IBoundingBox * Mark::bb()
 {
-    return m_bb;
-}
-
-void Mark::setPosition(Vec3 pos)
-{
-    m_model->setPosition(pos);
-    m_bb->setCenter(pos);
-}
-
-void Mark::setPosition(float x, float y, float z)
-{
-    setPosition(Vec3(x, y, z));
+    return m_aabb;
 }
 
 void Mark::changeColor()

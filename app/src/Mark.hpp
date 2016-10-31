@@ -2,6 +2,7 @@
 #define MARK_H
 
 #include "glRender.h"
+#include "aabb.hpp"
 
 namespace glRender {
 
@@ -14,17 +15,14 @@ public:
   void update() override;
   void draw(Camera * camera) override;
 
-  Model * model();
-  const AABB * bb();
-
-  void setPosition(Vec3 pos);
-  void setPosition(float x, float y, float z);
+  Model * model() override;
+  IBoundingBox * bb() override;
 
   void changeColor();
 
 private:
   Model * m_model;
-  AABB * m_bb;
+  AABB * m_aabb;
 
   float m_r;
   float m_g;

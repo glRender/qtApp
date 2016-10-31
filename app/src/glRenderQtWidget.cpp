@@ -122,9 +122,6 @@ void glRenderQtWidget::paintGL()
 
 void glRenderQtWidget::mouseReleaseEvent(QMouseEvent *event)
 {
-    float n = camera->nearPlane();
-    float f = camera->farPlane();
-
     Vec2 normDeviceCoords(
                 2.0f * (float)event->pos().x() / width() - 1.0f,
                 1.0f - 2.0f * (float)event->pos().y() / height() );
@@ -147,22 +144,24 @@ void glRenderQtWidget::mouseReleaseEvent(QMouseEvent *event)
     Vec3 worldCoords(tmp.x, tmp.y, tmp.z);
     worldCoords.normalize();
 
-    Vec3 origin = camera->position() + worldCoords * n;
-    Vec3 target = camera->position() + worldCoords * f;
+    Vec3 origin = camera->position() + worldCoords * camera->nearPlane();
+    Vec3 target = camera->position() + worldCoords * camera->farPlane();
 
     Ray * ray = new Ray(origin, target);
 
     scene->traverse([ray](Node * node) {
-        Mark * m = dynamic_cast<Mark*>(node);
-        if (m != nullptr)
+        if (node->isSelectable())
         {
-            if (m->bb()->intersects(ray))
+            if (node->bb()->intersects(ray))
             {
-                m->changeColor();
-                qDebug() << "Has intersection!";
+                Mark * m = dynamic_cast<Mark *>(node);
+                if (m != nullptr)
+                {
+                    m->changeColor();
+                    qDebug() << "Has intersection!";
+                }
             }
         }
-
     });
 
     qDebug() << origin.x << origin.y << origin.z << " -> " << target.x << target.y << target.z;

@@ -27,7 +27,8 @@ BrickBox::BrickBox()
 
 BrickBox::~BrickBox()
 {
-
+    delete m_model;
+    delete m_aabb;
 }
 
 void BrickBox::update()
@@ -43,6 +44,11 @@ void BrickBox::draw(Camera *camera)
 Model * BrickBox::model()
 {
     return m_model;
+}
+
+AABB *BrickBox::bb()
+{
+    return m_aabb;
 }
 
 }
