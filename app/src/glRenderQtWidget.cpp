@@ -48,6 +48,8 @@ void glRenderQtWidget::initializeGL()
     scene = new glRender::Scene();
     scene->setActiveCamera(camera);
 
+    nodePicker = new NodePicker(camera, scene);
+
     srand( time(0) );
 
     for (int i=0; i<1000; i++)
@@ -55,7 +57,7 @@ void glRenderQtWidget::initializeGL()
         if ((int)(rand() % 3) == 0)
         {
             WoodenBox *n = new WoodenBox();
-            n->model()->setPosition( ((rand() % 50)) - 25, ((rand() % 50)) - 25, ((rand() % 50) - 25) );
+            n->model()->setOrigin( ((rand() % 50)) - 25, ((rand() % 50)) - 25, ((rand() % 50) - 25) );
             n->model()->setWireframeMode(false);
             scene->addNode(n);
 
@@ -63,7 +65,7 @@ void glRenderQtWidget::initializeGL()
         if ((int)(rand() % 3) == 1)
         {
             BrickBox *n = new BrickBox();
-            n->model()->setPosition( ((rand() % 50)) - 25, ((rand() % 50)) - 25, ((rand() % 50) - 25) );
+            n->model()->setOrigin( ((rand() % 50)) - 25, ((rand() % 50)) - 25, ((rand() % 50) - 25) );
             n->model()->setWireframeMode(false);
             scene->addNode(n);
 
@@ -72,7 +74,7 @@ void glRenderQtWidget::initializeGL()
         {
             Mark * n = new Mark(0,1,0,1);
             n->model()->setWireframeMode(false);
-            n->setPosition(Vec3(((rand() % 50)) - 25, ((rand() % 50)) - 25, ((rand() % 50) - 25)));
+            n->setOrigin(Vec3(((rand() % 50)) - 25, ((rand() % 50)) - 25, ((rand() % 50) - 25)));
             scene->addNode(n);
 
         }
@@ -98,8 +100,7 @@ void glRenderQtWidget::initializeGL()
 
     fp = new Mark(0,1,0,1);
     fp->model()->setWireframeMode(true);
-    fp->setPosition(Vec3(0,0,0));
-//    fp->model()->setPosition( 0,0,-3 );
+    fp->setOrigin(Vec3(0,0,0));
     scene->addNode(fp);
 
 }
@@ -126,44 +127,22 @@ void glRenderQtWidget::mouseReleaseEvent(QMouseEvent *event)
                 2.0f * (float)event->pos().x() / width() - 1.0f,
                 1.0f - 2.0f * (float)event->pos().y() / height() );
 
-    Vec4 clipCoords(
-                normDeviceCoords.x,
-                normDeviceCoords.y,
-                -1.0f,
-                1.0f );
-
-    Mat4 p = camera->projectionMatrix();
-    p.invert();
-    Vec4 eyeCoords = p * clipCoords;
-    eyeCoords.z = -1.0f;
-    eyeCoords.w = 0.0f;
-
-    Mat4 t = camera->transformationMatrix();
-    t.invert();
-    Vec4 tmp = t * eyeCoords;
-    Vec3 worldCoords(tmp.x, tmp.y, tmp.z);
-    worldCoords.normalize();
-
-    Vec3 origin = camera->position() + worldCoords * camera->nearPlane();
-    Vec3 target = camera->position() + worldCoords * camera->farPlane();
-
-    Ray * ray = new Ray(origin, target);
-
-    scene->traverse([ray](Node * node) {
-        if (node->isSelectable())
+    std::vector<Mark *> selectedMarks = nodePicker->find<Mark>(normDeviceCoords);
+    if (selectedMarks.size() > 0)
+    {
+        for (Mark * m : selectedMarks)
         {
-            if (node->bb()->intersects(ray))
-            {
-                Mark * m = dynamic_cast<Mark *>(node);
-                if (m != nullptr)
-                {
-                    m->changeColor();
-                    qDebug() << "Has intersection!";
-                }
-            }
+            m->changeColor();
         }
-    });
 
-    qDebug() << origin.x << origin.y << origin.z << " -> " << target.x << target.y << target.z;
+        qDebug() << "Has intersection!";
+    }
+
+    std::vector<WoodenBox *> selectedWoodenBoxes = nodePicker->find<WoodenBox>(normDeviceCoords);
+    if (selectedWoodenBoxes.size() > 0)
+    {
+        qDebug() << "Has intersection with " << selectedWoodenBoxes.size() << " woodenBxes";
+    }
+
 
 }

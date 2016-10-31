@@ -36,6 +36,8 @@ private:
 
     Scene * scene;
 
+    NodePicker * nodePicker;
+
     QTimer m_drawUpdater;
     QTimer m_logicUpdater;
 

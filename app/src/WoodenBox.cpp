@@ -22,7 +22,7 @@ WoodenBox::WoodenBox()
 
     m_model = new Model(geometry, textures, shaderProgram);
     m_model->setWireframeMode(false);
-    m_model->setPosition(0.0, 0.0, 0.0);
+    m_model->setOrigin(0.0, 0.0, 0.0);
 }
 
 WoodenBox::~WoodenBox()
