@@ -1,15 +1,15 @@
-#ifndef MARK_H
-#define MARK_H
+#ifndef LINE_H
+#define LINE_H
 
 #include "glRender.h"
 
 namespace glRender {
 
-class Mark : public Node
+class Line : public Node
 {
 public:
-  Mark(float r, float g, float b, float size);
-  ~Mark();
+  Line(Vec3 p0, Vec3 p1, Vec3 p2, uint segmentsNumber);
+  ~Line();
 
   void update() override;
   void draw(Camera * camera) override;
@@ -17,18 +17,12 @@ public:
   Model * model() override;
   IBoundingBox * bb() override;
 
-  void changeColor();
-
 private:
   Model * m_model;
   AABB * m_aabb;
-
-  float m_r;
-  float m_g;
-  float m_b;
 
 };
 
 }
 
-#endif // MARK_H
+#endif // LINE_H

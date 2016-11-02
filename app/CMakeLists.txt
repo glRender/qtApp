@@ -13,6 +13,7 @@ set (lib_src ${SRC}/glRenderQtWidget.cpp
              ${SRC}/Mark.cpp
              ${SRC}/WoodenBox.cpp
              ${SRC}/BrickBox.cpp
+             ${SRC}/Line.cpp
 )
 
 set (lib_hdr ${SRC}/glRenderQtWidget.h
@@ -20,6 +21,7 @@ set (lib_hdr ${SRC}/glRenderQtWidget.h
              ${SRC}/Mark.hpp
              ${SRC}/WoodenBox.hpp
              ${SRC}/BrickBox.hpp
+             ${SRC}/Line.hpp
 )
 
 set (lib_ui  ${SRC}/mainwindow.ui)

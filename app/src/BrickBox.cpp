@@ -33,7 +33,7 @@ BrickBox::~BrickBox()
 
 void BrickBox::update()
 {
-    m_model->rotate(0.1, Vec3::AXE_Y());
+//    m_model->rotate(0.1, Vec3::AXE_Y());
 }
 
 void BrickBox::draw(Camera *camera)

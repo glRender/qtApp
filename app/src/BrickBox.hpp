@@ -12,7 +12,6 @@ public:
   ~BrickBox();
 
   void update() override;
-
   void draw(Camera * camera) override;
 
   Model * model() override;

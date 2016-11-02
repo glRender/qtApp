@@ -5,6 +5,7 @@
 #include "Mark.hpp"
 #include "WoodenBox.hpp"
 #include "BrickBox.hpp"
+#include "Line.hpp"
 
 glRenderQtWidget::glRenderQtWidget(QWidget *parent) :
     QGLWidget(parent)
@@ -52,41 +53,52 @@ void glRenderQtWidget::initializeGL()
 
     srand( time(0) );
 
-    for (int i=0; i<1000; i++)
+    for (int i=0; i<512; i++)
     {
-        if ((int)(rand() % 3) == 0)
+        if ((int)(rand() % 4) == 0)
         {
-            WoodenBox *n = new WoodenBox();
-            n->model()->setOrigin( ((rand() % 50)) - 25, ((rand() % 50)) - 25, ((rand() % 50) - 25) );
-            n->model()->setWireframeMode(false);
-            scene->addNode(n);
+//            WoodenBox *n = new WoodenBox();
+//            n->model()->setOrigin( ((rand() % 50)) - 25, ((rand() % 50)) - 25, ((rand() % 50) - 25) );
+//            n->model()->setWireframeMode(false);
+//            scene->addNode(n);
 
         } else
-        if ((int)(rand() % 3) == 1)
+        if ((int)(rand() % 4) == 1)
         {
-            BrickBox *n = new BrickBox();
-            n->model()->setOrigin( ((rand() % 50)) - 25, ((rand() % 50)) - 25, ((rand() % 50) - 25) );
-            n->model()->setWireframeMode(false);
-            scene->addNode(n);
+//            BrickBox *n = new BrickBox();
+//            n->model()->setOrigin( ((rand() % 50)) - 25, ((rand() % 50)) - 25, ((rand() % 50) - 25) );
+//            n->model()->setWireframeMode(false);
+//            scene->addNode(n);
 
         } else
-        if ((int)(rand() % 3) == 2)
+        if ((int)(rand() % 4) == 2)
         {
-            Mark * n = new Mark(0,1,0,1);
-            n->model()->setWireframeMode(false);
-            n->setOrigin(Vec3(((rand() % 50)) - 25, ((rand() % 50)) - 25, ((rand() % 50) - 25)));
-            scene->addNode(n);
+//            Mark * n = new Mark(0,1,0,1);
+//            n->model()->setWireframeMode(false);
+//            n->setOrigin(Vec3(((rand() % 50)) - 25, ((rand() % 50)) - 25, ((rand() % 50) - 25)));
+//            scene->addNode(n);
+
+        } else
+        if ((int)(rand() % 4) == 3)
+        {
+            Vec3 p0 = Vec3(0,0,0);
+            Vec3 p1 = Vec3(((rand() % 50)) - 25, ((rand() % 50)) - 25, ((rand() % 50) - 25));
+            Vec3 p2 = Vec3(((rand() % 50)) - 25, ((rand() % 50)) - 25, ((rand() % 50) - 25));
+
+            Line * l = new Line(p0, p1, p2, 255);
+//            n->setOrigin(Vec3(((rand() % 50)) - 25, ((rand() % 50)) - 25, ((rand() % 50) - 25)));
+            scene->addNode(l);
 
         }
     }
 
-    m_drawUpdater.setInterval(1);
+    m_drawUpdater.setInterval(64);
     connect(&m_drawUpdater, &QTimer::timeout, this, [&]() {
         this->update();
     });
     m_drawUpdater.start();
 
-    m_logicUpdater.setInterval(1);
+    m_logicUpdater.setInterval(32);
     connect(&m_logicUpdater, &QTimer::timeout, this, [&]() {
         scene->update();
         emit updated();
@@ -98,10 +110,10 @@ void glRenderQtWidget::initializeGL()
 //    np->setPos( Vec3(0,0,0) );
 //    scene->addNode(np);
 
-    fp = new Mark(0,1,0,1);
-    fp->model()->setWireframeMode(true);
-    fp->setOrigin(Vec3(0,0,0));
-    scene->addNode(fp);
+//    fp = new Mark(0,1,0,1);
+//    fp->model()->setWireframeMode(true);
+//    fp->setOrigin(Vec3(0,0,0));
+//    scene->addNode(fp);
 
 }
 

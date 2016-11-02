@@ -14,6 +14,7 @@ namespace glRender {
     class Mark;
     class WoodenBox;
     class BrickBox;
+    class Line;
 }
 
 class glRenderQtWidget : public QGLWidget
@@ -33,6 +34,7 @@ private:
 
     Mark * np;
     Mark * fp;
+    Line * l;
 
     Scene * scene;
 
