@@ -8,7 +8,7 @@ namespace glRender {
 class Line : public Node
 {
 public:
-  Line(Vec3 p0, Vec3 p1, Vec3 p2, uint segmentsNumber);
+  Line(Vec3 p0, Vec3 p1, Vec3 p2, uint segmentsNumber, float r, float g, float b);
   ~Line();
 
   void update() override;
@@ -20,6 +20,16 @@ public:
 private:
   Model * m_model;
   AABB * m_aabb;
+
+  Vec3 m_p0;
+  Vec3 m_p1;
+  Vec3 m_p2;
+
+  int m_segmentsNumber;
+
+  float m_r;
+  float m_g;
+  float m_b;
 
 };
 

@@ -53,30 +53,32 @@ void glRenderQtWidget::initializeGL()
 
     srand( time(0) );
 
-    for (int i=0; i<512; i++)
+    uint segmentsNumber = 0;
+
+    for (int i=0; i<4000; i++)
     {
         if ((int)(rand() % 4) == 0)
         {
-//            WoodenBox *n = new WoodenBox();
-//            n->model()->setOrigin( ((rand() % 50)) - 25, ((rand() % 50)) - 25, ((rand() % 50) - 25) );
-//            n->model()->setWireframeMode(false);
-//            scene->addNode(n);
+            WoodenBox *n = new WoodenBox();
+            n->model()->setOrigin( ((rand() % 50)) - 25, ((rand() % 50)) - 25, ((rand() % 50) - 25) );
+            n->model()->setWireframeMode(false);
+            scene->addNode(n);
 
         } else
         if ((int)(rand() % 4) == 1)
         {
-//            BrickBox *n = new BrickBox();
-//            n->model()->setOrigin( ((rand() % 50)) - 25, ((rand() % 50)) - 25, ((rand() % 50) - 25) );
-//            n->model()->setWireframeMode(false);
-//            scene->addNode(n);
+            BrickBox *n = new BrickBox();
+            n->model()->setOrigin( ((rand() % 50)) - 25, ((rand() % 50)) - 25, ((rand() % 50) - 25) );
+            n->model()->setWireframeMode(false);
+            scene->addNode(n);
 
         } else
         if ((int)(rand() % 4) == 2)
         {
-//            Mark * n = new Mark(0,1,0,1);
-//            n->model()->setWireframeMode(false);
-//            n->setOrigin(Vec3(((rand() % 50)) - 25, ((rand() % 50)) - 25, ((rand() % 50) - 25)));
-//            scene->addNode(n);
+            Mark * n = new Mark(0,1,0,1);
+            n->model()->setWireframeMode(false);
+            n->setOrigin(Vec3(((rand() % 50)) - 25, ((rand() % 50)) - 25, ((rand() % 50) - 25)));
+            scene->addNode(n);
 
         } else
         if ((int)(rand() % 4) == 3)
@@ -85,8 +87,12 @@ void glRenderQtWidget::initializeGL()
             Vec3 p1 = Vec3(((rand() % 50)) - 25, ((rand() % 50)) - 25, ((rand() % 50) - 25));
             Vec3 p2 = Vec3(((rand() % 50)) - 25, ((rand() % 50)) - 25, ((rand() % 50) - 25));
 
-            Line * l = new Line(p0, p1, p2, 255);
-//            n->setOrigin(Vec3(((rand() % 50)) - 25, ((rand() % 50)) - 25, ((rand() % 50) - 25)));
+            float r = (rand() % 255) / 255.0;
+            float g = (rand() % 255) / 255.0;
+            float b = (rand() % 255) / 255.0;
+
+            Line * l = new Line(p0, p1, p2, 512, r, g, b);
+            l->setOrigin(Vec3(((rand() % 50)) - 25, ((rand() % 50)) - 25, ((rand() % 50) - 25)));
             scene->addNode(l);
 
         }

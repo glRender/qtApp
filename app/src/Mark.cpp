@@ -24,6 +24,10 @@ Mark::Mark(float r, float g, float b, float size)
         shaderProgram->setAttributeType( "uv", AttributeType::UV );
     }
 
+    shaderProgram->addUniform("r");
+    shaderProgram->addUniform("g");
+    shaderProgram->addUniform("b");
+
     m_model = new Model(geometry, textures, shaderProgram);
     m_model->setWireframeMode(false);
     m_model->setOrigin(0.0, 0.0, 0.0);
@@ -36,14 +40,14 @@ Mark::~Mark()
 
 void Mark::update()
 {
-    //      m_model->rotate(0.1, Vec3::AXE_Y());
+    m_model->rotate(0.1, Vec3::AXE_Y());
 }
 
 void Mark::draw(Camera *camera)
 {
-    m_model->shaderProgram()->setUniform("r", m_r);
-    m_model->shaderProgram()->setUniform("g", m_g);
-    m_model->shaderProgram()->setUniform("b", m_b);
+    m_model->shaderProgram()->setUniform1f("r", m_r);
+    m_model->shaderProgram()->setUniform1f("g", m_g);
+    m_model->shaderProgram()->setUniform1f("b", m_b);
 
     m_model->draw(camera);
 }
