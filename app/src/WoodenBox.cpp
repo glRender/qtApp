@@ -10,14 +10,14 @@ WoodenBox::WoodenBox()
     textures->setTexture( "texture0", ResourceManager::getInstance().getTexture("data/Plywood_1024x640.png") );
 
     ShaderProgram * shaderProgram = ResourceManager::getInstance().getShaderProgram("data/shader0.vertex", "data/shader0.frag");
-    if (shaderProgram->hasAttribute("vertex"))
+    if (shaderProgram->hasAttribute<Vec3>("vertex"))
     {
-        shaderProgram->setAttributeType( "vertex", AttributeType::XYZ );
+        shaderProgram->addAttribute<Vec3>("vertex");
     }
 
-    if (shaderProgram->hasAttribute("uv"))
+    if (shaderProgram->hasAttribute<Vec2>("uv"))
     {
-        shaderProgram->setAttributeType( "uv", AttributeType::UV );
+        shaderProgram->addAttribute<Vec2>("uv");
     }
 
     shaderProgram->addUniform<Mat4>("projection");

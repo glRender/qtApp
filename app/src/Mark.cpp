@@ -14,14 +14,14 @@ Mark::Mark(float r, float g, float b, float size)
     Textures * textures = new Textures();
 
     ShaderProgram * shaderProgram = ResourceManager::getInstance().getShaderProgram("data/colored.vertex", "data/colored.frag");
-    if (shaderProgram->hasAttribute("vertex"))
+    if (shaderProgram->hasAttribute<Vec3>("vertex"))
     {
-        shaderProgram->setAttributeType( "vertex", AttributeType::XYZ );
+        shaderProgram->addAttribute<Vec3>("vertex");
     }
 
-    if (shaderProgram->hasAttribute("uv"))
+    if (shaderProgram->hasAttribute<Vec2>("uv"))
     {
-        shaderProgram->setAttributeType( "uv", AttributeType::UV );
+        shaderProgram->addAttribute<Vec2>("uv");
     }
 
     shaderProgram->addUniform<Mat4>("projection");

@@ -18,9 +18,9 @@ Line::Line(Vec3 p0, Vec3 p1, Vec3 p2, uint segmentsNumber, float r, float g, flo
     Textures * textures = new Textures();
 
     ShaderProgram * shaderProgram = ResourceManager::getInstance().getShaderProgram("data/colored.vertex", "data/colored.frag");
-    if (shaderProgram->hasAttribute("vertex"))
+    if (shaderProgram->hasAttribute<Vec3>("vertex"))
     {
-        shaderProgram->setAttributeType( "vertex", AttributeType::XYZ );
+        shaderProgram->addAttribute<Vec3>("vertex");
     }
 
     shaderProgram->addUniform<float>("r");
@@ -30,6 +30,8 @@ Line::Line(Vec3 p0, Vec3 p1, Vec3 p2, uint segmentsNumber, float r, float g, flo
     shaderProgram->addUniform<Mat4>("projection");
     shaderProgram->addUniform<Mat4>("view");
     shaderProgram->addUniform<Mat4>("model");
+
+//    shaderProgram->setUniform<Texture>("texture0", );
 
     m_model = new Model(geometry, textures, shaderProgram);
     m_model->setWireframeMode(false);
