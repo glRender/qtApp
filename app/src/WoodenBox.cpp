@@ -24,7 +24,7 @@ WoodenBox::WoodenBox()
     shaderProgram->addUniform<Mat4>("view");
     shaderProgram->addUniform<Mat4>("model");
 
-//    shaderProgram->addUniform<Texture>("texture0");
+    shaderProgram->addUniform<Texture>("texture0");
 
     m_model = new Model(geometry, textures, shaderProgram);
     m_model->setWireframeMode(false);
