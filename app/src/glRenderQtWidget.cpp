@@ -53,9 +53,7 @@ void glRenderQtWidget::initializeGL()
 
     srand( time(0) );
 
-    uint segmentsNumber = 0;
-
-    for (int i=0; i<4000; i++)
+    for (int i=0; i<3000; i++)
     {
         if ((int)(rand() % 4) == 0)
         {
@@ -83,7 +81,7 @@ void glRenderQtWidget::initializeGL()
         } else
         if ((int)(rand() % 4) == 3)
         {
-            Vec3 p0 = Vec3(0,0,0);
+            Vec3 p0 = Vec3(((rand() % 50)) - 25, ((rand() % 50)) - 25, ((rand() % 50) - 25));
             Vec3 p1 = Vec3(((rand() % 50)) - 25, ((rand() % 50)) - 25, ((rand() % 50) - 25));
             Vec3 p2 = Vec3(((rand() % 50)) - 25, ((rand() % 50)) - 25, ((rand() % 50) - 25));
 
@@ -92,7 +90,6 @@ void glRenderQtWidget::initializeGL()
             float b = (rand() % 255) / 255.0;
 
             Line * l = new Line(p0, p1, p2, 512, r, g, b);
-            l->setOrigin(Vec3(((rand() % 50)) - 25, ((rand() % 50)) - 25, ((rand() % 50) - 25)));
             scene->addNode(l);
 
         }

@@ -20,6 +20,11 @@ BrickBox::BrickBox()
         shaderProgram->setAttributeType( "uv", AttributeType::UV );
     }
 
+    shaderProgram->addUniform<Mat4>("projection");
+    shaderProgram->addUniform<Mat4>("view");
+    shaderProgram->addUniform<Mat4>("model");
+    shaderProgram->addUniform<Texture>("texture0");
+
     m_model = new Model(geometry, textures, shaderProgram);
     m_model->setWireframeMode(false);
     m_model->setOrigin(0.0, 0.0, 0.0);
