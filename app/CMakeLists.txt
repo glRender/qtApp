@@ -2,9 +2,9 @@ cmake_minimum_required (VERSION 2.8.11)
 
 set (CMAKE_CXX_STANDARD 11)
 
-find_package (Qt5Widgets)
-find_package (Qt5OpenGL)
-find_package(GLEW REQUIRED)
+find_package (Qt5Widgets REQUIRED)
+find_package (Qt5OpenGL REQUIRED)
+find_package (GLEW REQUIRED)
 
 set (SRC src)
 
