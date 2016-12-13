@@ -13,90 +13,95 @@ glRenderQtWidget::glRenderQtWidget(QWidget *parent) :
 
 }
 
-void APIENTRY glDebugOutput(GLenum source,
-                            GLenum type,
-                            GLuint id,
-                            GLenum severity,
-                            GLsizei length,
-                            const GLchar *message,
-                            void *userParam)
-{
-    // ignore non-significant error/warning codes
-    if(id == 131169 || id == 131185 || id == 131218 || id == 131204) return;
+//void APIENTRY glDebugOutput(GLenum source,
+//                            GLenum type,
+//                            GLuint id,
+//                            GLenum severity,
+//                            GLsizei length,
+//                            const GLchar *message,
+//                            void *userParam)
+//{
+//    // ignore non-significant error/warning codes
+//    if(id == 131169 || id == 131185 || id == 131218 || id == 131204) return;
 
-    std::cout << "---------------" << std::endl;
-    std::cout << "Debug message (" << id << "): " <<  message << std::endl;
+//    std::cout << "---------------" << std::endl;
+//    std::cout << "Debug message (" << id << "): " <<  message << std::endl;
 
-    switch (source)
-    {
-        case GL_DEBUG_SOURCE_API:             std::cout << "Source: API"; break;
-        case GL_DEBUG_SOURCE_WINDOW_SYSTEM:   std::cout << "Source: Window System"; break;
-        case GL_DEBUG_SOURCE_SHADER_COMPILER: std::cout << "Source: Shader Compiler"; break;
-        case GL_DEBUG_SOURCE_THIRD_PARTY:     std::cout << "Source: Third Party"; break;
-        case GL_DEBUG_SOURCE_APPLICATION:     std::cout << "Source: Application"; break;
-        case GL_DEBUG_SOURCE_OTHER:           std::cout << "Source: Other"; break;
-    } std::cout << std::endl;
+//    switch (source)
+//    {
+//        case GL_DEBUG_SOURCE_API:             std::cout << "Source: API"; break;
+//        case GL_DEBUG_SOURCE_WINDOW_SYSTEM:   std::cout << "Source: Window System"; break;
+//        case GL_DEBUG_SOURCE_SHADER_COMPILER: std::cout << "Source: Shader Compiler"; break;
+//        case GL_DEBUG_SOURCE_THIRD_PARTY:     std::cout << "Source: Third Party"; break;
+//        case GL_DEBUG_SOURCE_APPLICATION:     std::cout << "Source: Application"; break;
+//        case GL_DEBUG_SOURCE_OTHER:           std::cout << "Source: Other"; break;
+//    } std::cout << std::endl;
 
-    switch (type)
-    {
-        case GL_DEBUG_TYPE_ERROR:               std::cout << "Type: Error"; break;
-        case GL_DEBUG_TYPE_DEPRECATED_BEHAVIOR: std::cout << "Type: Deprecated Behaviour"; break;
-        case GL_DEBUG_TYPE_UNDEFINED_BEHAVIOR:  std::cout << "Type: Undefined Behaviour"; break;
-        case GL_DEBUG_TYPE_PORTABILITY:         std::cout << "Type: Portability"; break;
-        case GL_DEBUG_TYPE_PERFORMANCE:         std::cout << "Type: Performance"; break;
-        case GL_DEBUG_TYPE_MARKER:              std::cout << "Type: Marker"; break;
-        case GL_DEBUG_TYPE_PUSH_GROUP:          std::cout << "Type: Push Group"; break;
-        case GL_DEBUG_TYPE_POP_GROUP:           std::cout << "Type: Pop Group"; break;
-        case GL_DEBUG_TYPE_OTHER:               std::cout << "Type: Other"; break;
-    } std::cout << std::endl;
+//    switch (type)
+//    {
+//        case GL_DEBUG_TYPE_ERROR:               std::cout << "Type: Error"; break;
+//        case GL_DEBUG_TYPE_DEPRECATED_BEHAVIOR: std::cout << "Type: Deprecated Behaviour"; break;
+//        case GL_DEBUG_TYPE_UNDEFINED_BEHAVIOR:  std::cout << "Type: Undefined Behaviour"; break;
+//        case GL_DEBUG_TYPE_PORTABILITY:         std::cout << "Type: Portability"; break;
+//        case GL_DEBUG_TYPE_PERFORMANCE:         std::cout << "Type: Performance"; break;
+//        case GL_DEBUG_TYPE_MARKER:              std::cout << "Type: Marker"; break;
+//        case GL_DEBUG_TYPE_PUSH_GROUP:          std::cout << "Type: Push Group"; break;
+//        case GL_DEBUG_TYPE_POP_GROUP:           std::cout << "Type: Pop Group"; break;
+//        case GL_DEBUG_TYPE_OTHER:               std::cout << "Type: Other"; break;
+//    } std::cout << std::endl;
 
-    switch (severity)
-    {
-        case GL_DEBUG_SEVERITY_HIGH:         std::cout << "Severity: high"; break;
-        case GL_DEBUG_SEVERITY_MEDIUM:       std::cout << "Severity: medium"; break;
-        case GL_DEBUG_SEVERITY_LOW:          std::cout << "Severity: low"; break;
-        case GL_DEBUG_SEVERITY_NOTIFICATION: std::cout << "Severity: notification"; break;
-    } std::cout << std::endl;
-    std::cout << std::endl;
-}
+//    switch (severity)
+//    {
+//        case GL_DEBUG_SEVERITY_HIGH:         std::cout << "Severity: high"; break;
+//        case GL_DEBUG_SEVERITY_MEDIUM:       std::cout << "Severity: medium"; break;
+//        case GL_DEBUG_SEVERITY_LOW:          std::cout << "Severity: low"; break;
+//        case GL_DEBUG_SEVERITY_NOTIFICATION: std::cout << "Severity: notification"; break;
+//    } std::cout << std::endl;
+//    std::cout << std::endl;
+//}
 
 void glRenderQtWidget::initializeGL()
 {
-    glewExperimental = GL_TRUE;
+//    glewExperimental = GL_TRUE;
+//    GLenum err = glewInit();
+//    if (err != GLEW_OK)
+//    {
+//        printf("%s", glewGetErrorString(err));
+//    }
 
-    GLenum err = glewInit();
-    if (err != GLEW_OK)
+//    if ( !GLEW_VERSION_3_3 )
+//    {
+//        printf ( "OpenGL 3.0 not supported.\n" );
+
+//        exit(-1);
+//    }
+
+//    if (GL_CONTEXT_FLAG_DEBUG_BIT)
+//    {
+//        glEnable(GL_DEBUG_OUTPUT);
+//        glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS);
+//        glDebugMessageCallback(glDebugOutput, nullptr);
+//        glDebugMessageControl(GL_DONT_CARE, GL_DONT_CARE, GL_DONT_CARE, 0, nullptr, GL_TRUE);
+//    }
+
+//    // print context information
+//    printf ("**************************\n");
+//    printf ("Vendor: %s\n", glGetString (GL_VENDOR));
+//    printf ("Renderer: %s\n", glGetString (GL_RENDERER));
+//    printf ("Version: %s\n", glGetString (GL_VERSION));
+//    printf ("GLSL: %s\n", glGetString (GL_SHADING_LANGUAGE_VERSION));
+//    printf ("Extensions: %s\n", glGetString(GL_EXTENSIONS));
+//    printf ("**************************\n");
+
+//    glClearColor ( 0.5, 0.5, 0.5, 1.0 );
+//    glEnable     ( GL_DEPTH_TEST );
+//    glDepthFunc  ( GL_LEQUAL );
+
+    render = new Render();
+    if (!render->glLoad())
     {
-        printf("%s", glewGetErrorString(err));
+        exit(3);
     }
-
-    if ( !GLEW_VERSION_3_3 )
-    {
-        printf ( "OpenGL 3.0 not supported.\n" );
-
-        exit(-1);
-    }
-
-    if (GL_CONTEXT_FLAG_DEBUG_BIT)
-    {
-        glEnable(GL_DEBUG_OUTPUT);
-        glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS);
-        glDebugMessageCallback(glDebugOutput, nullptr);
-        glDebugMessageControl(GL_DONT_CARE, GL_DONT_CARE, GL_DONT_CARE, 0, nullptr, GL_TRUE);
-    }
-
-    // print context information
-    printf ("**************************\n");
-    printf ("Vendor: %s\n", glGetString (GL_VENDOR));
-    printf ("Renderer: %s\n", glGetString (GL_RENDERER));
-    printf ("Version: %s\n", glGetString (GL_VERSION));
-    printf ("GLSL: %s\n", glGetString (GL_SHADING_LANGUAGE_VERSION));
-    printf ("Extensions: %s\n", glGetString(GL_EXTENSIONS));
-    printf ("**************************\n");
-
-    glClearColor ( 0.5, 0.5, 0.5, 1.0 );
-    glEnable     ( GL_DEPTH_TEST );
-    glDepthFunc  ( GL_LEQUAL );
 
     camera = new glRender::PerspectiveCamera( 90.0 / 180.0 * MATH_PI, 16.0f/9.0f, 1.0f, 200.0f );
     camera->lookAt(Vec3(0,0,0), Vec3(0,0,-10), Vec3::AXE_Y());
@@ -111,32 +116,32 @@ void glRenderQtWidget::initializeGL()
 
     for (int i=0; i<3000; i++)
     {
-        if ((int)(rand() % 4) == 0)
-        {
-            WoodenBox *n = new WoodenBox();
-            n->model()->setOrigin( ((rand() % 50)) - 25, ((rand() % 50)) - 25, ((rand() % 50) - 25) );
-            n->model()->setWireframeMode(false);
-            scene->addNode(n);
+//        if ((int)(rand() % 4) == 0)
+//        {
+//            WoodenBox *n = new WoodenBox();
+//            n->model()->setOrigin( ((rand() % 50)) - 25, ((rand() % 50)) - 25, ((rand() % 50) - 25) );
+//            n->model()->setWireframeMode(false);
+//            scene->addNode(n);
 
-        } else
-        if ((int)(rand() % 4) == 1)
-        {
+//        } else
+//        if ((int)(rand() % 4) == 1)
+//        {
             BrickBox *n = new BrickBox();
             n->model()->setOrigin( ((rand() % 50)) - 25, ((rand() % 50)) - 25, ((rand() % 50) - 25) );
             n->model()->setWireframeMode(false);
             scene->addNode(n);
 
-        } else
-        if ((int)(rand() % 4) == 2)
-        {
-            Mark * n = new Mark(0,1,0,1);
-            n->model()->setWireframeMode(false);
-            n->setOrigin(Vec3(((rand() % 50)) - 25, ((rand() % 50)) - 25, ((rand() % 50) - 25)));
-            scene->addNode(n);
+//        } else
+//        if ((int)(rand() % 4) == 2)
+//        {
+//            Mark * n = new Mark(0,1,0,1);
+//            n->model()->setWireframeMode(false);
+//            n->setOrigin(Vec3(((rand() % 50)) - 25, ((rand() % 50)) - 25, ((rand() % 50) - 25)));
+//            scene->addNode(n);
 
-        } else
-        if ((int)(rand() % 4) == 3)
-        {
+//        } else
+//        if ((int)(rand() % 4) == 3)
+//        {
             Vec3 p0 = Vec3(((rand() % 50)) - 25, ((rand() % 50)) - 25, ((rand() % 50) - 25));
             Vec3 p1 = Vec3(((rand() % 50)) - 25, ((rand() % 50)) - 25, ((rand() % 50) - 25));
             Vec3 p2 = Vec3(((rand() % 50)) - 25, ((rand() % 50)) - 25, ((rand() % 50) - 25));
@@ -148,16 +153,16 @@ void glRenderQtWidget::initializeGL()
             Line * l = new Line(p0, p1, p2, 512, r, g, b);
             scene->addNode(l);
 
-        }
+//        }
     }
 
-    m_drawUpdater.setInterval(64);
+    m_drawUpdater.setInterval(32);
     connect(&m_drawUpdater, &QTimer::timeout, this, [&]() {
         this->update();
     });
     m_drawUpdater.start();
 
-    m_logicUpdater.setInterval(32);
+    m_logicUpdater.setInterval(1000);
     connect(&m_logicUpdater, &QTimer::timeout, this, [&]() {
         scene->update();
         emit updated();
@@ -178,18 +183,19 @@ void glRenderQtWidget::initializeGL()
 
 void glRenderQtWidget::resizeGL(int w, int h)
 {
-    glViewport ( 0, 0, (GLsizei)w, (GLsizei)h );
-
+    render->setViewPortSize(w, h);
+//    glViewport ( 0, 0, (GLsizei)w, (GLsizei)h );
 }
 
 void glRenderQtWidget::paintGL()
 {
-    glClearColor ( 0.5, 0.5, 0.5, 1.0 );
-    glEnable     ( GL_DEPTH_TEST );
-    glDepthFunc  ( GL_LEQUAL );
-    glClear      ( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
+//    glClearColor ( 0.5, 0.5, 0.5, 1.0 );
+//    glEnable     ( GL_DEPTH_TEST );
+//    glDepthFunc  ( GL_LEQUAL );
+//    glClear      ( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
 
-    scene->draw();
+//    scene->draw();
+    render->draw(scene);
 }
 
 void glRenderQtWidget::mouseReleaseEvent(QMouseEvent *event)

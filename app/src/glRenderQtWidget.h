@@ -40,8 +40,13 @@ private:
 
     NodePicker * nodePicker;
 
+    Render * render;
+
     QTimer m_drawUpdater;
     QTimer m_logicUpdater;
+
+    QString defaultResourcesPath = "./data";
+    QString bashVarWithResourcesPath = "GL_RENDER_QT_APP_RESOURCES_PATH";
 
 signals:
     void mousePositionChanged(Vec2 position);
