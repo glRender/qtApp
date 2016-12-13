@@ -93,10 +93,6 @@ void glRenderQtWidget::initializeGL()
 //    printf ("Extensions: %s\n", glGetString(GL_EXTENSIONS));
 //    printf ("**************************\n");
 
-//    glClearColor ( 0.5, 0.5, 0.5, 1.0 );
-//    glEnable     ( GL_DEPTH_TEST );
-//    glDepthFunc  ( GL_LEQUAL );
-
     render = new Render();
     if (!render->glLoad())
     {
@@ -116,32 +112,32 @@ void glRenderQtWidget::initializeGL()
 
     for (int i=0; i<3000; i++)
     {
-//        if ((int)(rand() % 4) == 0)
-//        {
-//            WoodenBox *n = new WoodenBox();
-//            n->model()->setOrigin( ((rand() % 50)) - 25, ((rand() % 50)) - 25, ((rand() % 50) - 25) );
-//            n->model()->setWireframeMode(false);
-//            scene->addNode(n);
+        if ((int)(rand() % 4) == 0)
+        {
+            WoodenBox *n = new WoodenBox();
+            n->model()->setOrigin( ((rand() % 50)) - 25, ((rand() % 50)) - 25, ((rand() % 50) - 25) );
+            n->model()->setWireframeMode(false);
+            scene->addNode(n);
 
-//        } else
-//        if ((int)(rand() % 4) == 1)
-//        {
+        } else
+        if ((int)(rand() % 4) == 1)
+        {
             BrickBox *n = new BrickBox();
             n->model()->setOrigin( ((rand() % 50)) - 25, ((rand() % 50)) - 25, ((rand() % 50) - 25) );
             n->model()->setWireframeMode(false);
             scene->addNode(n);
 
-//        } else
-//        if ((int)(rand() % 4) == 2)
-//        {
-//            Mark * n = new Mark(0,1,0,1);
-//            n->model()->setWireframeMode(false);
-//            n->setOrigin(Vec3(((rand() % 50)) - 25, ((rand() % 50)) - 25, ((rand() % 50) - 25)));
-//            scene->addNode(n);
+        } else
+        if ((int)(rand() % 4) == 2)
+        {
+            Mark * n = new Mark(0,1,0,1);
+            n->model()->setWireframeMode(false);
+            n->setOrigin(Vec3(((rand() % 50)) - 25, ((rand() % 50)) - 25, ((rand() % 50) - 25)));
+            scene->addNode(n);
 
-//        } else
-//        if ((int)(rand() % 4) == 3)
-//        {
+        } else
+        if ((int)(rand() % 4) == 3)
+        {
             Vec3 p0 = Vec3(((rand() % 50)) - 25, ((rand() % 50)) - 25, ((rand() % 50) - 25));
             Vec3 p1 = Vec3(((rand() % 50)) - 25, ((rand() % 50)) - 25, ((rand() % 50) - 25));
             Vec3 p2 = Vec3(((rand() % 50)) - 25, ((rand() % 50)) - 25, ((rand() % 50) - 25));
@@ -153,7 +149,7 @@ void glRenderQtWidget::initializeGL()
             Line * l = new Line(p0, p1, p2, 512, r, g, b);
             scene->addNode(l);
 
-//        }
+        }
     }
 
     m_drawUpdater.setInterval(32);
@@ -162,39 +158,21 @@ void glRenderQtWidget::initializeGL()
     });
     m_drawUpdater.start();
 
-    m_logicUpdater.setInterval(1000);
+    m_logicUpdater.setInterval(64);
     connect(&m_logicUpdater, &QTimer::timeout, this, [&]() {
         scene->update();
         emit updated();
     });
     m_logicUpdater.start();
-
-//    np = new Mark(1,0,0,1);
-//    np->model()->setWireframeMode(true);
-//    np->setPos( Vec3(0,0,0) );
-//    scene->addNode(np);
-
-//    fp = new Mark(0,1,0,1);
-//    fp->model()->setWireframeMode(true);
-//    fp->setOrigin(Vec3(0,0,0));
-//    scene->addNode(fp);
-
 }
 
 void glRenderQtWidget::resizeGL(int w, int h)
 {
     render->setViewPortSize(w, h);
-//    glViewport ( 0, 0, (GLsizei)w, (GLsizei)h );
 }
 
 void glRenderQtWidget::paintGL()
 {
-//    glClearColor ( 0.5, 0.5, 0.5, 1.0 );
-//    glEnable     ( GL_DEPTH_TEST );
-//    glDepthFunc  ( GL_LEQUAL );
-//    glClear      ( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
-
-//    scene->draw();
     render->draw(scene);
 }
 
@@ -220,6 +198,4 @@ void glRenderQtWidget::mouseReleaseEvent(QMouseEvent *event)
     {
         qDebug() << "Has intersection with " << selectedWoodenBoxes.size() << " woodenBxes";
     }
-
-
 }
