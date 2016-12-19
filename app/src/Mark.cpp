@@ -19,11 +19,6 @@ Mark::Mark(float r, float g, float b, float size)
         shaderProgram->addAttribute<Vec3>("vertex");
     }
 
-    if (shaderProgram->hasAttribute<Vec2>("uv"))
-    {
-        shaderProgram->addAttribute<Vec2>("uv");
-    }
-
     shaderProgram->addUniform<Mat4>("projection");
     shaderProgram->addUniform<Mat4>("view");
     shaderProgram->addUniform<Mat4>("model");

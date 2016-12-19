@@ -62,20 +62,6 @@ glRenderQtWidget::glRenderQtWidget(QWidget *parent) :
 
 void glRenderQtWidget::initializeGL()
 {
-//    glewExperimental = GL_TRUE;
-//    GLenum err = glewInit();
-//    if (err != GLEW_OK)
-//    {
-//        printf("%s", glewGetErrorString(err));
-//    }
-
-//    if ( !GLEW_VERSION_3_3 )
-//    {
-//        printf ( "OpenGL 3.0 not supported.\n" );
-
-//        exit(-1);
-//    }
-
 //    if (GL_CONTEXT_FLAG_DEBUG_BIT)
 //    {
 //        glEnable(GL_DEBUG_OUTPUT);
@@ -84,20 +70,12 @@ void glRenderQtWidget::initializeGL()
 //        glDebugMessageControl(GL_DONT_CARE, GL_DONT_CARE, GL_DONT_CARE, 0, nullptr, GL_TRUE);
 //    }
 
-//    // print context information
-//    printf ("**************************\n");
-//    printf ("Vendor: %s\n", glGetString (GL_VENDOR));
-//    printf ("Renderer: %s\n", glGetString (GL_RENDERER));
-//    printf ("Version: %s\n", glGetString (GL_VERSION));
-//    printf ("GLSL: %s\n", glGetString (GL_SHADING_LANGUAGE_VERSION));
-//    printf ("Extensions: %s\n", glGetString(GL_EXTENSIONS));
-//    printf ("**************************\n");
-
-    render = new Render();
-    if (!render->glLoad())
+    if (!Render::glLoad())
     {
         exit(3);
     }
+
+    printf("%s\n\n", Render::contextInformation());
 
     camera = new glRender::PerspectiveCamera( 90.0 / 180.0 * MATH_PI, 16.0f/9.0f, 1.0f, 200.0f );
     camera->lookAt(Vec3(0,0,0), Vec3(0,0,-10), Vec3::AXE_Y());
@@ -168,12 +146,12 @@ void glRenderQtWidget::initializeGL()
 
 void glRenderQtWidget::resizeGL(int w, int h)
 {
-    render->setViewPortSize(w, h);
+    Render::setViewPortSize(w, h);
 }
 
 void glRenderQtWidget::paintGL()
 {
-    render->draw(scene);
+    Render::draw(scene);
 }
 
 void glRenderQtWidget::mouseReleaseEvent(QMouseEvent *event)

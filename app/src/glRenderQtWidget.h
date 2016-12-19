@@ -40,8 +40,6 @@ private:
 
     NodePicker * nodePicker;
 
-    Render * render;
-
     QTimer m_drawUpdater;
     QTimer m_logicUpdater;
 
