@@ -38,6 +38,8 @@ private:
 
     Scene * scene;
 
+    Render * render;
+
     NodePicker * nodePicker;
 
     QTimer m_drawUpdater;
