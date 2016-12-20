@@ -15,7 +15,7 @@ glRenderQtWidget::glRenderQtWidget(QWidget *parent) :
 
 void glRenderQtWidget::initializeGL()
 {
-    render = Render::glLoad();
+    render = Render::instance();
     if (render == nullptr)
     {
         exit(3);
