@@ -2,7 +2,7 @@
 #define GLWINDOW_H
 
 #include <GL/glew.h>
-#include <QGLWidget>
+#include <QOpenGLWidget>
 #include "glRender.h"
 
 #include <QTimer>
@@ -17,7 +17,7 @@ namespace glRender {
     class Line;
 }
 
-class glRenderQtWidget : public QGLWidget
+class glRenderQtWidget : public QOpenGLWidget
 {
     Q_OBJECT
 public:

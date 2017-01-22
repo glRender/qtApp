@@ -15,7 +15,17 @@
   </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QGridLayout" name="gridLayout_3">
-    <item row="0" column="1">
+    <item row="0" column="0">
+     <widget class="glRenderQtWidget" name="widget" native="true">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="2" rowspan="2">
      <widget class="QGroupBox" name="groupBox">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
@@ -294,7 +304,17 @@
       </layout>
      </widget>
     </item>
-    <item row="0" column="0" rowspan="2">
+    <item row="1" column="0">
+     <widget class="glRenderQtWidget" name="glWidget1" native="true">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="1">
      <widget class="glRenderQtWidget" name="glWidget" native="true">
       <property name="sizePolicy">
        <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
@@ -306,6 +326,9 @@
        <enum>Qt::StrongFocus</enum>
       </property>
      </widget>
+    </item>
+    <item row="0" column="1">
+     <widget class="glRenderQtWidget" name="widget_2" native="true"/>
     </item>
    </layout>
   </widget>

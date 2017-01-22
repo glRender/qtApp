@@ -8,7 +8,7 @@
 #include "Line.hpp"
 
 glRenderQtWidget::glRenderQtWidget(QWidget *parent) :
-    QGLWidget(parent)
+    QOpenGLWidget(parent)
 {
 
 }
